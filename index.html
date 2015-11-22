@@ -21,12 +21,19 @@
         color:white;
         position:absolute;
         top:1em;
+        right:1em;
       }
       #nav-bot {
         height:1.5em;
         z-index:3;
       }
     </style>
+    <script>
+      window.onload = function() {
+        var links = window.getElementById("nav-links");
+        TweenLite.to(links,5,{left:"1em", ease:Bounce.easeOut})
+      }
+    </script>
   </head>
   <body>
     <div id="nav">
