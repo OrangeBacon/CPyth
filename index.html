@@ -28,6 +28,19 @@
         height:1.5em;
         z-index:3;
       }
+      .nav-menu {
+        background-color:#b7b7b7;
+        padding:0.4em;
+        margin:0;
+        position:relative;
+        border-radius:1em;
+        width:7em;
+        left:11.5em;
+        top:0.7em;
+      }
+      .nav-menu > div > p {
+        list-style-type: none;
+      }
     </style>
     <script>
       window.onload = function() {
@@ -48,7 +61,14 @@
         <span> | </span>
         <a>Settings</a>
       </div>
-      <div id="nav-bot"></div>
+      <div id="nav-bot">
+        <div class="nav-menu" id="nav-menu-settings">
+          <div class="list">
+            <p>Animations</p>
+            <p>Colour scheme</p>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
