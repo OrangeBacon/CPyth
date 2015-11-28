@@ -24,6 +24,12 @@
         right:1em;
         opacity:0;
       }
+      #nav-links > a {
+        cursor:pointer;
+      }
+      #nav-links > span {
+        cursor:default;
+      }
       #nav-bot {
         height:1.5em;
         z-index:3;
@@ -37,17 +43,27 @@
         left:11.5em;
         top:0.7em;
         border:0.4em solid #b7b7b7;
+        opacity:0;
+        visibility:hidden;
       }
       .nav-menu > div > p {
         list-style-type: none;
         padding:0.1em 0.2em 0.1em 0.2em;
         margin:0;
+        cursor:pointer;
       }
       .nav-menu > div > p:hover {
         background-color:#b7b7b7;
       }
     </style>
     <script>
+      var menu = 0;
+      var visible = "hidden";
+      function settings() {
+        menu = 1 - menu;
+        visible="hidden"?"hidden":"visible";
+        TweenLite.to(document.getElementById("nav-menu-settings"),0.1,{opacity:menu, visibility:visible})
+      };
       window.onload = function() {
         var links = document.getElementById("nav-links");
         TweenLite.to(links,5,{left:"1em", opacity:1, ease:Bounce.easeOut})
@@ -64,7 +80,7 @@
         <span> | </span>
         <a>About</a>
         <span> | </span>
-        <a>Settings</a>
+        <a onclick="settings()">Settings</a>
       </div>
       <div id="nav-bot">
         <div class="nav-menu" id="nav-menu-settings">
