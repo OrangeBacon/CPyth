@@ -49,12 +49,12 @@
         visibility:hidden;
       }
       #nav-menu-settings {
-        left:11.5em;
+        left:12.3em;
         top:0.7em;
       }
       #nav-menu-about {
-        left:8.25em;
-        top:-4.05em;
+        left:8.7em;
+        top:-4.2em;
       }
       .nav-menu > div > p {
         list-style-type: none;
@@ -70,6 +70,9 @@
       var menus = 0;
       var menua = 0;
       function settings() {
+        if (menua == 1) {
+          about()
+        }
         menus = 1 - menus;
         if (menus == 1) {
           TweenLite.to(document.getElementById("nav-menu-settings"),0.4,{visibility:"visible"});
@@ -80,6 +83,9 @@
         };
       };
       function about() {
+        if (menus == 1) {
+          settings()
+        }
         menua = 1 - menua;
         if (menua == 1) {
           TweenLite.to(document.getElementById("nav-menu-about"),0.4,{visibility:"visible"});
