@@ -30,6 +30,7 @@
         top:1em;
         right:1em;
         opacity:0;
+        display:inline;
       }
       #nav-links > a {
         cursor:pointer;
@@ -64,6 +65,11 @@
       }
       .nav-menu > div > p:hover {
         background-color:#b7b7b7;
+      }
+      #nav-bot a {
+        text-decoration:none;
+        color:black;
+        width:100%;
       }
     </style>
     <script>
@@ -103,15 +109,13 @@
   </head>
   <body>
     <div id="nav">
-      <div id="nav-top">
-        
-      </div>
+      <div id="nav-top"></div>
       <div id="nav-links">
-        <a>CPyth Interpreter</a>
+        <span title="CPyth Interpreter">CPyth Interpreter</span>
         <span> | </span>
-        <a onclick="about()">About</a>
+        <a onclick="about()" title="About this page">About</a>
         <span> | </span>
-        <a onclick="settings()">Settings</a>
+        <a onclick="settings()" title="This page's settings">Settings</a>
       </div>
       <div id="nav-bot">
         <div class="nav-menu" id="nav-menu-settings">
@@ -123,10 +127,11 @@
         </div>
         <div class="nav-menu" id="nav-menu-about">
           <div class="list">
-            <p>Help</p>
-            <p>Credits</p>
-            <p>Code</p>
-            <p>Tutorial</p>
+            <p title="How to use this">Help</p>
+            <p title="Who made this">Credits</p>
+            <p onclick="window.location.href ='https://github.com/ScratchOs/CPyth/tree/gh-pages';" title="Github code for the site">Code</p>
+            <p title="How to write the language">Tutorial</p>
+            <p onclick="window.location.href ='https://github.com/ScratchOs/CPyth/blob/master/Syntax.md#cpyth'" title="About the language">Specification</p>
           </div>
         </div>
       </div>
