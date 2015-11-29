@@ -4,9 +4,16 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/easing/EasePack.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <title>CPyth Interpreter</title>
     <style>
       html, body {
         margin:0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        cursor:default;
+        font-family:Roboto sans-serif;
       }
       #nav {
         background-color:#262626;
@@ -27,9 +34,6 @@
       #nav-links > a {
         cursor:pointer;
       }
-      #nav-links > span {
-        cursor:default;
-      }
       #nav-bot {
         height:1.5em;
         z-index:3;
@@ -40,11 +44,17 @@
         position:relative;
         border-radius:1em;
         width:7em;
-        left:11.5em;
-        top:0.7em;
         border:0.4em solid #b7b7b7;
         opacity:0;
         visibility:hidden;
+      }
+      #nav-menu-settings {
+        left:11.5em;
+        top:0.7em;
+      }
+      #nav-menu-about {
+        left:8.25em;
+        top:-4.05em;
       }
       .nav-menu > div > p {
         list-style-type: none;
@@ -57,15 +67,26 @@
       }
     </style>
     <script>
-      var menu = 0;
+      var menus = 0;
+      var menua = 0;
       function settings() {
-        menu = 1 - menu;
-        if (menu == 1) {
-          TweenLite.to(document.getElementById("nav-menu-settings"),0.1,{visibility:"visible"});
+        menus = 1 - menus;
+        if (menus == 1) {
+          TweenLite.to(document.getElementById("nav-menu-settings"),0.4,{visibility:"visible"});
         };
-        TweenLite.to(document.getElementById("nav-menu-settings"),0.1,{opacity:menu});
-        if (menu == 0) {
-          TweenLite.to(document.getElementById("nav-menu-settings"),0.1,{visibility:"hidden",delay:0.1});
+        TweenLite.to(document.getElementById("nav-menu-settings"),0.4,{opacity:menus});
+        if (menus == 0) {
+          TweenLite.to(document.getElementById("nav-menu-settings"),0.4,{visibility:"hidden",delay:0.4});
+        };
+      };
+      function about() {
+        menua = 1 - menua;
+        if (menua == 1) {
+          TweenLite.to(document.getElementById("nav-menu-about"),0.4,{visibility:"visible"});
+        };
+        TweenLite.to(document.getElementById("nav-menu-about"),0.4,{opacity:menua});
+        if (menua == 0) {
+          TweenLite.to(document.getElementById("nav-menu-about"),0.4,{visibility:"hidden",delay:0.4});
         };
       };
       window.onload = function() {
@@ -82,7 +103,7 @@
       <div id="nav-links">
         <a>CPyth Interpreter</a>
         <span> | </span>
-        <a>About</a>
+        <a onclick="about()">About</a>
         <span> | </span>
         <a onclick="settings()">Settings</a>
       </div>
@@ -92,6 +113,14 @@
             <p>Animations</p>
             <p>Colour scheme</p>
             <p>Font</p>
+          </div>
+        </div>
+        <div class="nav-menu" id="nav-menu-about">
+          <div class="list">
+            <p>Help</p>
+            <p>Credits</p>
+            <p>Code</p>
+            <p>Tutorial</p>
           </div>
         </div>
       </div>
