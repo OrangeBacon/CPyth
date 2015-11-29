@@ -44,7 +44,7 @@
         top:0.7em;
         border:0.4em solid #b7b7b7;
         opacity:0;
-        /*visibility:hidden;*/
+        visibility:hidden;
       }
       .nav-menu > div > p {
         list-style-type: none;
@@ -60,7 +60,13 @@
       var menu = 0;
       function settings() {
         menu = 1 - menu;
-        TweenLite.to(document.getElementById("nav-menu-settings"),0.1,{opacity:menu})
+        if (menu == 1) {
+          TweenLite.to(document.getElementById("nav-menu-settings"),0.1,{visibility:"visible"});
+        };
+        TweenLite.to(document.getElementById("nav-menu-settings"),0.1,{opacity:menu});
+        if (menu == 0) {
+          TweenLite.to(document.getElementById("nav-menu-settings"),0.1,{visibility:"hidden",delay:0.1});
+        };
       };
       window.onload = function() {
         var links = document.getElementById("nav-links");
