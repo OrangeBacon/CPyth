@@ -71,10 +71,25 @@
         color:black;
         width:100%;
       }
+      #foot {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 2em;
+        background-color: #262626;
+      }
+      #expand {
+        position: relative;
+        color: white;
+        bottom: 0.5em;
+        left: 1em;
+        cursor: pointer;
+      }
     </style>
     <script>
       var menus = 0;
       var menua = 0;
+      var foot = 2;
       function settings() {
         if (menua == 1) {
           about()
@@ -101,10 +116,20 @@
           TweenLite.to(document.getElementById("nav-menu-about"),0.4,{visibility:"hidden",delay:0.4});
         };
       };
+      function foote() {
+        if (foot == 2) {
+          foot = 5;
+          document.getElementById("expand").innerHTML = "Collapse Footer"
+        } else {
+          foot = 2;
+          document.getElementById("expand").innerHTML = "Expand Footer"
+        };
+        TweenLite.to(document.getElementById("foot"),0.5,{height:foot+"em"});
+      };
       window.onload = function() {
         var links = document.getElementById("nav-links");
-        TweenLite.to(links,5,{left:"1em", opacity:1, ease:Bounce.easeOut})
-      }
+        TweenLite.to(links,5,{left:"1em", opacity:1, ease:Bounce.easeOut});
+      };
     </script>
   </head>
   <body>
@@ -135,6 +160,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div id="foot">
+      <p id="expand" onclick="foote()">Expand Footer</p>
     </div>
   </body>
 </html>
