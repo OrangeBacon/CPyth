@@ -93,6 +93,11 @@
       #foot > a, #foot > span {
         color:white;
       }
+      #text {
+        width:100%;
+        position:absolute;
+        top:3em;
+      }
     </style>
     <script>
       var menus = 0;
@@ -147,7 +152,12 @@
       window.onload = function() {
         var links = document.getElementById("nav-links");
         TweenLite.to(links,5,{left:"1em", opacity:1, ease:Bounce.easeOut});
-        var editor = CodeMirror.fromTextArea(document.getElementById("text"), {lineNumbers: true});
+        var body = document.body;
+        var html = document.documentElement;
+        var docheight = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+        var topheight = document.getElementById("text").clientHeight;
+        document.getElementById("text").style.height = docheight - topheight;
+        var editor = CodeMirror(document.getElementById("text"), {lineNumbers: true});
       };
     </script>
   </head>
@@ -179,7 +189,7 @@
         </div>
       </div>
     </div>
-    <textarea id="text"></textarea>
+    <div id="text"></div>
     <div id="foot">
       <p id="expand" onclick="foote()">Expand Footer</p>
       <a>Privacy Policy</a>
