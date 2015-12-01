@@ -5,6 +5,10 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/easing/EasePack.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.9.0/codemirror.min.js"></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.9.0/codemirror.min.css' rel='stylesheet' type='text/css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.9.0/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.9.0/addon/fold/foldcode.js"></script>
     <title>CPyth Interpreter</title>
     <style>
       html, body {
@@ -143,6 +147,7 @@
       window.onload = function() {
         var links = document.getElementById("nav-links");
         TweenLite.to(links,5,{left:"1em", opacity:1, ease:Bounce.easeOut});
+        var editor = CodeMirror.fromTextArea(document.getElementById("text"), {lineNumbers: true});
       };
     </script>
   </head>
@@ -174,6 +179,7 @@
         </div>
       </div>
     </div>
+    <textarea id="text"></textarea>
     <div id="foot">
       <p id="expand" onclick="foote()">Expand Footer</p>
       <a>Privacy Policy</a>
