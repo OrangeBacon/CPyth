@@ -52,6 +52,7 @@
         border:0.4em solid #b7b7b7;
         opacity:0;
         visibility:hidden;
+        z-index:100;
       }
       #nav-menu-settings {
         left:12.3em;
@@ -157,7 +158,7 @@
         var docheight = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
         var topheight = document.getElementById("text").clientHeight;
         document.getElementById("text").style.height = docheight - topheight;
-        var editor = CodeMirror(document.getElementById("text"), {lineNumbers: true});
+        var editor = CodeMirror(document.getElementById("text"), {lineNumbers: true, indentWithTabs:true});
       };
     </script>
   </head>
