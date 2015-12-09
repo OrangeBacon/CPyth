@@ -1,1 +1,9 @@
 /*This will me where the main css will be */
+html, body {
+  margin:0;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor:default;
+  font-family:'Roboto', sans-serif;
+}
