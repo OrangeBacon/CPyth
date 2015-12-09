@@ -7,3 +7,8 @@ html, body {
   cursor:default;
   font-family:'Roboto', sans-serif;
 }
+#text {
+  width:100%;
+  position:absolute;
+  top:3em;
+}
