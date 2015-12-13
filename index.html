@@ -66,11 +66,10 @@
       window.onload = function() {
         var links = document.getElementById("nav-links");
         TweenLite.to(links,5,{left:"1em", opacity:1, ease:Bounce.easeOut});
-        var body = document.body;
-        var html = document.documentElement;
-        var docheight = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
-        var topheight = document.getElementById("text").clientHeight;
-        document.getElementById("text").style.height = docheight - topheight;
+        var nav = document.getElementById("nav").offsetHeight;
+        var bottom = document.getElementById("foot").offsetHeight;
+        var doc = window.innerHeight;
+        document.getElementById("text").style.height = doc - nav - bottom + "px"
         var editor = CodeMirror(document.getElementById("text"), {lineNumbers: true, indentWithTabs:true});
       };
     </script>
