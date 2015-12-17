@@ -10,107 +10,52 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.9.0/codemirror.min.js"></script>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.9.0/codemirror.min.css' rel='stylesheet' type='text/css'>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.9.0/mode/javascript/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.9.0/addon/fold/foldcode.js"></script>
+	<link href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.10.0/theme/pastel-on-dark.min.css' rel='stylesheet' type='text/css'>
     <title>CPyth Interpreter</title>
-    <script>
-      var menus = 0;
-      var menua = 0;
-      var foot = 2;
-      var footo = 1;
-      function settings() {
-        if (menua == 1) {
-          about()
-        }
-        menus = 1 - menus;
-        if (menus == 1) {
-          TweenLite.to(document.getElementById("nav-menu-settings"),0.4,{visibility:"visible"});
-        };
-        TweenLite.to(document.getElementById("nav-menu-settings"),0.4,{opacity:menus});
-        if (menus == 0) {
-          TweenLite.to(document.getElementById("nav-menu-settings"),0.4,{visibility:"hidden",delay:0.4});
-        };
-      };
-      function about() {
-        if (menus == 1) {
-          settings()
-        }
-        menua = 1 - menua;
-        if (menua == 1) {
-          TweenLite.to(document.getElementById("nav-menu-about"),0.4,{visibility:"visible"});
-        };
-        TweenLite.to(document.getElementById("nav-menu-about"),0.4,{opacity:menua});
-        if (menua == 0) {
-          TweenLite.to(document.getElementById("nav-menu-about"),0.4,{visibility:"hidden",delay:0.4});
-        };
-      };
-      function foote() {
-        if (foot == 2) {
-          foot = 5;
-          document.getElementById("expand").innerHTML = "Collapse Footer";
-        } else {
-          foot = 2;
-          document.getElementById("expand").innerHTML = "Expand Footer";
-        };
-        TweenLite.to(document.getElementById("foot"),0.5,{height:foot+"em"});
-      };
-      function foots() {
-        footo = 1 - footo;
-        if (footo == 1) {
-          document.getElementById("hide").innerHTML = "Hide Footer";
-        } else {
-          document.getElementById("hide").innerHTML = "Show Footer";
-        };
-        TweenLite.to(document.getElementById("foot"),0.5,{opacity:footo});
-      };
-      window.onload = function() {
-        var links = document.getElementById("nav-links");
-        TweenLite.to(links,5,{left:"1em", opacity:1, ease:Bounce.easeOut});
-        var nav = document.getElementById("nav").offsetHeight;
-        var bottom = document.getElementById("foot").offsetHeight;
-        var doc = window.innerHeight;
-        document.getElementById("text").style.height = doc - nav - bottom + "px"
-        var editor = CodeMirror(document.getElementById("text"), {lineNumbers: true, indentWithTabs:true});
-      };
-    </script>
+    <script src="javascript/main.js"></script>
   </head>
   <body>
     <div id="nav">
-      <div id="nav-top"></div>
       <div id="nav-links">
         <span title="CPyth Interpreter">CPyth Interpreter</span>
         <span> | </span>
-        <a onclick="about()" title="About this page">About</a>
+        <a onclick="menuAbout()" title="About this page">About</a>
         <span> | </span>
-        <a onclick="settings()" title="This page's settings">Settings</a>
+        <a onclick="menuSettings()" title="This page's settings">Settings</a>
       </div>
-      <div id="nav-bot">
+      <div id="nav-menus">
         <div class="nav-menu" id="nav-menu-settings">
-          <div class="list">
-            <p>Colour scheme</p>
-            <p id="hide" onclick="foots()">Hide Footer</p>
-          </div>
+          <p>Colour scheme</p>
+          <p id="hide" onclick="footVisibility()">Hide Footer</p>
         </div>
         <div class="nav-menu" id="nav-menu-about">
-          <div class="list">
-            <p title="How to use this">Help</p>
-            <p title="Who made this">Credits</p>
-            <p onclick="window.location.href ='https://github.com/ScratchOs/CPyth/tree/gh-pages';" title="Github code for the site">Code</p>
-            <p title="How to write the language">Tutorial</p>
-            <p onclick="window.location.href ='https://github.com/ScratchOs/CPyth/blob/master/Syntax.md#cpyth'" title="About the language">Specification</p>
-          </div>
+          <p title="How to use this">Help</p>
+          <p title="Who made this">Credits</p>
+          <p onclick="window.location.href ='https://github.com/ScratchOs/CPyth/tree/gh-pages';" title="Github code for the site">Code</p>
+          <p title="How to write the language">Tutorial</p>
+          <p onclick="window.location.href ='https://github.com/ScratchOs/CPyth/blob/master/Syntax.md#cpyth'" title="About the language">Specification</p>
         </div>
       </div>
     </div>
-    <div id="text"></div>
+    <div id="content">
+	  <div id="content-console"></div>
+	  <div id="content-codemirror"></div>
+	</div>
     <div id="foot">
-      <p id="expand" onclick="foote()">Expand Footer</p>
-      <a>Privacy Policy</a>
-      <span> | </span>
-      <a>Contact</a>
-      <span> | </span>
-      <a>Terms Of Service</a>
-      <span> | </span>
-      <a>DMCA</a>
+      <p id="foot-expand" onclick="footExpand()">Expand Footer</p>
+	  <div class="foot-links">
+		<a>Privacy Policy</a>
+		<span> | </span>
+		<a>Contact</a>
+		<span> | </span>
+		<a>Terms Of Service</a>
+		<span> | </span>
+		<a>DMCA</a>
+	  </div>
+	</div>
+	<div id="overlay">
+	  <h1 id="overlay-title"></h1>
+	  <p id="overlay-text"></p>
+	</div>
   </body>
 </html>

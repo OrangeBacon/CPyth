@@ -1,5 +1,6 @@
 /*This will me where the main css will be */
-html, body {
+html,
+body {
   margin:0;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -7,8 +8,49 @@ html, body {
   cursor:default;
   font-family:'Roboto', sans-serif;
 }
-#text {
+#content {
   width:100%;
   position:absolute;
   top:3em;
+  background-color:#464444;
+}
+#overlay {
+  z-index:10000;
+  position:fixed;
+  height:100%;
+  width:100%;
+  background-color:#464444;
+  top:0em;
+  opacity:0;
+  visibility:hidden;
+}
+#overlay-title,
+#overlay-text {
+   text-align:center;
+   color:white;
+}
+#content {
+  text-align:center;
+}
+#content-console {
+  border:2px solid black;
+  height:90%;
+  width:49%;
+  display:inline-block;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin-top:2%;
+  text-align:start;
+}
+#content-codemirror {
+  border:2px solid black;
+  height:90%;
+  width:49%;
+  display:inline-block;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin-top:2%;
+  text-align:start;
 }
