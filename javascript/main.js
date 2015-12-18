@@ -46,9 +46,9 @@ function footVisibility(){
     footOpacity = 2;
   };
   if(footOpacity!=0){
-    document.getElementById("hide").innerHTML = "Hide Footer";
+    document.getElementById("nav-menu-hide").innerHTML = "Hide Footer";
   }else{
-    document.getElementById("hide").innerHTML = "Show Footer";
+    document.getElementById("nav-menu-hide").innerHTML = "Show Footer";
   };
   TweenLite.to(document.getElementById("foot"),0.5,{height:footOpacity+"em"});
 };
@@ -59,11 +59,13 @@ function mainHeightSet(){
   document.getElementById("content").style.height = doc - nav - bottom + "px" 
 };
 function closeMenus(e){
-  if(menuAboutOpacity==1){
-    menuAbout();
-  };
-  if(menuSettingsOpacity==1){
-    menuSettings();
+  if(e.target.id!='nav-links-about' && e.target.id!='nav-links-settings'){
+    if(menuAboutOpacity==1){
+      menuAbout();
+    };
+    if(menuSettingsOpacity==1){
+      menuSettings();
+    };
   };
 }; 
 function mainError(title,message){
@@ -104,7 +106,18 @@ function codeText(message){
   document.getElementById('content-console-output').insertBefore(element,document.getElementById('content-console-output-bottom'))
 }
 window.onload = function() {
+  TweenLite.to(document.getElementById("content"),0,{visibility:"visible", delay:1});
+  TweenLite.to(document.getElementById("content"),1,{opacity:1, delay:1});
   setInterval(mainHeightSet,1);
   document.addEventListener("click",function(event){closeMenus(event);},true);
-  //var myCodeMirror = CodeMirror(document.getElementById("content-codemirror"),{lineNumbers: true,theme: "pastel-on-dark"});
+  document.getElementById('foot-expand').addEventListener("click",footExpand);
+  document.getElementById('nav-links-about').addEventListener("click",menuAbout);
+  document.getElementById('nav-links-settings').addEventListener("click",menuSettings);
+  document.getElementById('nav-menu-hide').addEventListener("click",footVisibility);
+  document.getElementById('nav-menu-about-code').addEventListener("click",function(){window.location.href ='https://github.com/ScratchOs/CPyth/tree/gh-pages';});
+  document.getElementById('nav-menu-about-lang').addEventListener("click",function(){window.location.href ='https://github.com/ScratchOs/CPyth/blob/master/Syntax.md#cpyth';});
+  document.getElementById('content-console-input-form').addEventListener("submit", function(event){console.log("submit");codeText(document.getElementById('content-console-input-form-text').value);document.getElementById('content-console-input-form-text').value = "";return false},true);
+  var myCodeMirror = CodeMirror(document.getElementById("content-codemirror-container"),{lineNumbers: true,theme: "pastel-on-dark",viewportMargin:Infinity});
+  myCodeMirror.getDoc().setValue('Your code');
+  myCodeMirror.refresh();
 };

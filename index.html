@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href='stylesheets/main.css' rel='stylesheet' type='text/css'>
-    <link href='stylesheets/foot.css' rel='stylesheet' type='text/css'>
-    <link href='stylesheets/header.css' rel='stylesheet' type='text/css'>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/easing/EasePack.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js"></script>
@@ -13,6 +10,9 @@
 	<link href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.10.0/theme/pastel-on-dark.min.css' rel='stylesheet' type='text/css'>
     <title>CPyth Interpreter</title>
     <script src="javascript/main.js"></script>
+	<link href='stylesheets/main.css' rel='stylesheet' type='text/css'>
+    <link href='stylesheets/foot.css' rel='stylesheet' type='text/css'>
+    <link href='stylesheets/header.css' rel='stylesheet' type='text/css'>
 	<meta charset="utf-8"></meta>
   </head>
   <body>
@@ -20,21 +20,21 @@
       <div id="nav-links">
         <span title="CPyth Interpreter">CPyth Interpreter</span>
         <span> | </span>
-        <a onclick="menuAbout()" title="About this page">About</a>
+        <a id="nav-links-about" title="About this page">About</a>
         <span> | </span>
-        <a onclick="menuSettings()" title="This page's settings">Settings</a>
+        <a id="nav-links-settings" title="This page's settings">Settings</a>
       </div>
       <div id="nav-menus">
         <div class="nav-menu" id="nav-menu-settings">
           <p>Colour scheme</p>
-          <p id="hide" onclick="footVisibility()">Hide Footer</p>
+          <p id="nav-menu-hide">Hide Footer</p>
         </div>
         <div class="nav-menu" id="nav-menu-about">
           <p title="How to use this">Help</p>
           <p title="Who made this">Credits</p>
-          <p onclick="window.location.href ='https://github.com/ScratchOs/CPyth/tree/gh-pages';" title="Github code for the site">Code</p>
+          <p id="nav-menu-about-code" title="Github code for the site">Code</p>
           <p title="How to write the language">Tutorial</p>
-          <p onclick="window.location.href ='https://github.com/ScratchOs/CPyth/blob/master/Syntax.md#cpyth'" title="About the language">Specification</p>
+          <p id="nav-menu-about-lang" title="About the language">Specification</p>
         </div>
       </div>
     </div>
@@ -47,13 +47,18 @@
 		  <br>
 		</div>
 		<div id="content-console-input">
-		  <input id="content-console-input-text" type="text" placeholder="Type Here"></input>
+		  <form id="content-console-input-form" action="#">
+		    <input id="content-console-input-form-text" type="text" placeholder="Type Here" autocomplete="off">
+		    <input type="submit" id="content-console-input-form-submit">
+	      </form>
 		</div>
 	  </div>
-	  <div id="content-codemirror"></div>
+	  <div id="content-codemirror">
+	    <div id="content-codemirror-container"></div>
+	  </div>
 	</div>
     <div id="foot">
-      <p id="foot-expand" onclick="footExpand()">Expand Footer</p>
+      <p id="foot-expand">Expand Footer</p>
 	  <div id="foot-links">
 		<a>Privacy Policy</a>
 		<span> | </span>
