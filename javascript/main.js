@@ -66,15 +66,43 @@ function closeMenus(e){
     menuSettings();
   };
 }; 
-function error(title,message){
+function mainError(title,message){
   TweenLite.to(document.getElementById("overlay"),0.5,{visibility:"visible",opacity:"1",});
   document.getElementById("overlay-title").innerHTML = title;
   document.getElementById("overlay-text").innerHTML = message;
 };
-function removeError(){
+function removeMainError(){
   TweenLite.to(document.getElementById("overlay"),0.5,{opacity:"0",});
   TweenLite.to(document.getElementById("nav-menu-about"),0,{visibility:"hidden",delay:0.5});
 };
+function codeError(message){
+  var element = document.createElement("p");
+  element.setAttribute("title","Error");
+  element.setAttribute("class","error");
+  element.innerHTML = message;
+  document.getElementById('content-console-output').insertBefore(element,document.getElementById('content-console-output-bottom'))
+}
+function codeWarning(message){
+  var element = document.createElement("p");
+  element.setAttribute("title","Warning");
+  element.setAttribute("class","warning");
+  element.innerHTML = message;
+  document.getElementById('content-console-output').insertBefore(element,document.getElementById('content-console-output-bottom'))
+}
+function codeInfo(message){
+  var element = document.createElement("p");
+  element.setAttribute("title","Info");
+  element.setAttribute("class","info");
+  element.innerHTML = message;
+  document.getElementById('content-console-output').insertBefore(element,document.getElementById('content-console-output-bottom'))
+}
+function codeText(message){
+  var element = document.createElement("p");
+  element.setAttribute("title","Text");
+  element.setAttribute("class","text");
+  element.innerHTML = message;
+  document.getElementById('content-console-output').insertBefore(element,document.getElementById('content-console-output-bottom'))
+}
 window.onload = function() {
   setInterval(mainHeightSet,1);
   document.addEventListener("click",function(event){closeMenus(event);},true);
