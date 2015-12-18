@@ -116,7 +116,7 @@ window.onload = function() {
   document.getElementById('nav-menu-hide').addEventListener("click",footVisibility);
   document.getElementById('nav-menu-about-code').addEventListener("click",function(){window.location.href ='https://github.com/ScratchOs/CPyth/tree/gh-pages';});
   document.getElementById('nav-menu-about-lang').addEventListener("click",function(){window.location.href ='https://github.com/ScratchOs/CPyth/blob/master/Syntax.md#cpyth';});
-  document.getElementById('content-console-input-form').addEventListener("submit", function(event){console.log("submit");codeText(document.getElementById('content-console-input-form-text').value);document.getElementById('content-console-input-form-text').value = "";return false},true);
+  document.getElementById('content-console-input-form').addEventListener("submit", function(event){console.log("submit");codeText(document.getElementById('content-console-input-form-text').value);document.getElementById('content-console-input-form-text').value = "";return false;},true);
   var myCodeMirror = CodeMirror(document.getElementById("content-codemirror-container"),{lineNumbers: true,theme: "pastel-on-dark",viewportMargin:Infinity});
   myCodeMirror.getDoc().setValue('Your code');
   myCodeMirror.refresh();
