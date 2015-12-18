@@ -83,28 +83,31 @@ function codeError(message){
   element.setAttribute("class","error");
   element.innerHTML = message;
   document.getElementById('content-console-output').insertBefore(element,document.getElementById('content-console-output-bottom'))
-}
+};
 function codeWarning(message){
   var element = document.createElement("p");
   element.setAttribute("title","Warning");
   element.setAttribute("class","warning");
   element.innerHTML = message;
   document.getElementById('content-console-output').insertBefore(element,document.getElementById('content-console-output-bottom'))
-}
+};
 function codeInfo(message){
   var element = document.createElement("p");
   element.setAttribute("title","Info");
   element.setAttribute("class","info");
   element.innerHTML = message;
   document.getElementById('content-console-output').insertBefore(element,document.getElementById('content-console-output-bottom'))
-}
+};
 function codeText(message){
   var element = document.createElement("p");
   element.setAttribute("title","Text");
   element.setAttribute("class","text");
   element.innerHTML = message;
   document.getElementById('content-console-output').insertBefore(element,document.getElementById('content-console-output-bottom'))
-}
+};
+if(window.location.href.indexOf('?') <= -1){
+  window.location.href ='https://scratchos.github.io/CPyth/?';
+};
 window.onload = function() {
   TweenLite.to(document.getElementById("content"),0,{visibility:"visible", delay:1});
   TweenLite.to(document.getElementById("content"),1,{opacity:1, delay:1});
@@ -116,7 +119,7 @@ window.onload = function() {
   document.getElementById('nav-menu-hide').addEventListener("click",footVisibility);
   document.getElementById('nav-menu-about-code').addEventListener("click",function(){window.location.href ='https://github.com/ScratchOs/CPyth/tree/gh-pages';});
   document.getElementById('nav-menu-about-lang').addEventListener("click",function(){window.location.href ='https://github.com/ScratchOs/CPyth/blob/master/Syntax.md#cpyth';});
-  document.getElementById('content-console-input-form').addEventListener("submit", function(event){console.log("submit");codeText(document.getElementById('content-console-input-form-text').value);document.getElementById('content-console-input-form-text').value = "";return false;},true);
+  document.getElementById('content-console-input-form').addEventListener("submit", function(event){event.preventDefault;codeText(document.getElementById('content-console-input-form-text').value);document.getElementById('content-console-input-form-text').value = "";return false;},true);
   var myCodeMirror = CodeMirror(document.getElementById("content-codemirror-container"),{lineNumbers: true,theme: "pastel-on-dark",viewportMargin:Infinity});
   myCodeMirror.getDoc().setValue('Your code');
   myCodeMirror.refresh();
