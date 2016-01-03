@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="javascript/lib.js"></script>
 	<link href='stylesheets/lib.css' rel='stylesheet' type='text/css'>
-    <title>CPyth Interpreter</title>
-    <script src="javascript/main.js"></script>
 	<link href='stylesheets/main.css' rel='stylesheet' type='text/css'>
     <link href='stylesheets/foot.css' rel='stylesheet' type='text/css'>
     <link href='stylesheets/header.css' rel='stylesheet' type='text/css'>
+	<link href='stylesheets/overlay.css' rel='stylesheet' type='text/css'>
+    <script src="javascript/main.js"></script>
+    <script src="javascript/lib.js"></script>
+	<title>CPyth Interpreter</title>
 	<meta charset="utf-8"></meta>
   </head>
   <body>
@@ -36,10 +37,13 @@
     <div id="content">
 	  <div id="content-console">
 	    <div id="content-console-output">
-		  <br id="content-console-output-bottom">
-		  <br>
-		  <br>
-		  <br>
+		  <div id="content-console-output-overlay"></div>
+		  <div id="content-console-output-main">
+		    <br id="content-console-output-main-bottom">
+		    <br>
+		    <br>
+		    <br>
+		  </div>
 		</div>
 		<div id="content-console-input">
 		  <form id="content-console-input-form" action="#">

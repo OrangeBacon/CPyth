@@ -101,7 +101,8 @@ div::-webkit-scrollbar-thumb {
 #content-console-input-form-submit {
   display:none;
 }
-#content-console-output {
+#content-console-output-main,
+#content-console-output-overlay {
   background-color: #262626;
   height: 100%;
   width: 100%;
@@ -114,37 +115,36 @@ div::-webkit-scrollbar-thumb {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   overflow-y:scroll;
-  white-space: wrap;
   word-wrap:break-word;
 }
-#content-console-output > p.info {
+#content-console-output-main > p.info {
   padding-left:1em;
   color:#A4C7ED;
 }
-#content-console-output > p.info:before {
+#content-console-output-main > p.info:before {
  content:"►";
  padding-right:0.5em;
  color:#A4C7ED;
 }
-#content-console-output > p.error {
+#content-console-output-main > p.error {
   padding-left:1em;
   color:#FA5555;
 }
-#content-console-output > p.error:before {
+#content-console-output-main > p.error:before {
  content:"►";
  padding-right:0.5em;
  color:#FA5555;
 }
-#content-console-output > p.warning {
+#content-console-output-main > p.warning {
   padding-left:1em;
   color:#DCE362;
 }
-#content-console-output > p.warning:before {
+#content-console-output-main> p.warning:before {
  content:"►";
  padding-right:0.5em;
  color:#DCE362;
 }
-#content-console-output > p.text {
+#content-console-output-main > p.text {
   padding-left:1em;
   color:white;
 }
@@ -159,6 +159,12 @@ div::-webkit-scrollbar-thumb {
 .CodeMirror {
   height:100%;
 }
+
 .CodeMirror-gutters {
   height:100% !important;
 }
+#content-console-output-overlay-iframe {
+  height: 99%;
+  width: 100%;
+  border: 0;
+ }

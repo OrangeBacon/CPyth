@@ -1,0 +1,9 @@
+#overlay-colour-title {
+  color:white;
+  padding-left:1em;
+}
+#overlay-colour{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
