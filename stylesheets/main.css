@@ -8,6 +8,7 @@ body {
   cursor:default;
   font-family:'Roboto', sans-serif;
   background-color:#464444;
+  overflow:hidden;
 }
 div::-webkit-scrollbar {
   width: 0.5em;
@@ -16,10 +17,13 @@ div::-webkit-scrollbar {
  
 div::-webkit-scrollbar-thumb {
   background-color: darkgrey;
-  outline: 1px solid slategrey;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
+}
+div::-webkit-scrollbar-corner {
+  display:none;
+  color:#262626;
 }
 #content {
   width:100%;
@@ -163,8 +167,69 @@ div::-webkit-scrollbar-thumb {
 .CodeMirror-gutters {
   height:100% !important;
 }
-#content-console-output-overlay-iframe {
-  height: 99%;
+#windows,.window-container {
+  height:100%;
+  width:100%;
+  position:absolute;
+  top:0;
+  pointer-events:none;
+}
+.window {
+  height:10%;
+  width:10%;
+  background-color:#262626;
+  position:relative;
+  resize:both;
+  overflow:auto;
+  pointer-events:all;
+  border-radius: 5px;
+  border: 2px solid black;
+  cursor:default!important;
+}
+.window-header {
   width: 100%;
-  border: 0;
- }
+  height: 1em;
+  background-color: #262626;
+  cursor:move!important;
+}
+.window-header-close {
+  float: right;
+  width: 2em;
+  height: 100%;
+  background-color: #262626;
+  border-left: 2px solid black;
+  box-sizing: border-box;
+  border-bottom: 2px solid black;
+  text-align: center;
+}
+ .window-header-close-text, .window-header-dock-text {
+  margin: 0;
+  top: 0;
+  position: absolute;
+  text-align: center;
+  width: 1.9em;
+  line-height: 0.95em;
+  cursor:pointer;
+  color:white;
+}
+.window-header-dock {
+  float: right;
+  width: 2em;
+  height: 100%;
+  background-color: #262626;
+  border-left: 2px solid black;
+  box-sizing: border-box;
+  border-bottom: 2px solid black;
+  border-bottom-left-radius:5px;
+}
+.window-header-title {
+  margin:0;
+  color:white;
+  cursor:default;
+  padding-left:1em;
+  cursor:inherit;
+}
+::-webkit-resizer {
+   background-color:black;
+   cursor:nwse-resize;
+}

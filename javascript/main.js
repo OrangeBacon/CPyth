@@ -1,5 +1,4 @@
 //Main Javascript file
-
 //==============================
 //== User Interface Functions ==
 //==============================
@@ -15,6 +14,9 @@ function ui(){
   this.nav = document.getElementById("nav").offsetHeight;
   this.bottom = document.getElementById("foot").offsetHeight;
   this.doc = window.innerHeight;
+  this.windows = [];
+  this.window;
+  this.windowTemplate = '<div class="window-container" id="<id>"><div class="window"><div class="window-header"><div class="window-header-close" data-id="<id>" id="window-header-close-<id>"><p class="window-header-close-text" onclick="ui.closeWindow(event)">X</p></div><div class="window-header-dock"><p class="window-header-dock-text">X</p></div><p class="window-header-title"><title></p></div><content></div></div>'
   //external reference
   ui = this;
   //open settings menu
@@ -126,7 +128,38 @@ function ui(){
     TweenLite.to(document.getElementById("content-console-output-main"),0,{opacity:"1"});
 	TweenLite.to(document.getElementById('content-console-input'),1,{height:'2em'});
 	document.getElementById('content-console-output-overlay').innerHTML = "";
-  }
+  };
+  this.window = function(content,id,title) {
+    Window = ui.windowTemplate;
+	Window = Window.replace(/<id>/g,id);
+	Window = Window.replace(/<title>/g,title);
+	Window = Window.replace(/<content>/g,content);
+	document.getElementById("windows").innerHTML = document.getElementById("windows").innerHTML + Window;
+	ui.windows.push(id);
+	ui.windows.forEach(function(entry){
+	  Draggable.create('#'+entry+'>div',{bounds: document.getElementById("content")});
+	  document.getElementById("window-header-close-"+entry).addEventListener("click",function(event){ui.closeWindow(event)},true);
+	});
+  };
+  this.closeWindow = function(event){
+    document.querySelector("#"+event.target.parentNode.getAttribute("data-id")).parentNode.removeChild(document.querySelector("#"+event.target.parentNode.getAttribute("data-id")));
+	var index = ui.windows.indexOf(event.target.parentNode.getAttribute("data-id"));
+	if (index > -1) {
+      ui.windows.splice(index, 1);
+    };
+  };
+  this.httpWindow = function(file,id,title) {
+    if(ui.windows.indexOf(id) == -1){
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+          ui.window(xhttp.responseText,id,title);
+        };
+      };
+      xhttp.open("GET", file, true);
+      xhttp.send();
+	};
+  };
 };
 
 //===================================
@@ -169,7 +202,7 @@ function console(){
   };
   //print help - currently rubbish :)
   this.help = function(){
-    console.codeInfo("This currently supports only 1 language, console.\nConsole commands are entered into the input box and always start with ':'.");
+    console.codeInfo("This currently supports only 1 language, console. Console commands are entered into the input box and always start with ':'.");
   };
 };
 
@@ -340,6 +373,7 @@ function init() {
   document.getElementById('nav-links-settings').addEventListener("click",function(){ui.menuSettings()});
   document.getElementById('nav-menu-hide').addEventListener("click",function(){ui.footVisibility()});
   document.getElementById('nav-menu-about-help').addEventListener("click",function(){console.help()});
+  /*document.getElementById('content-console-input-form').addEventListener("keydown",function(e){console.codeWarning(e)},true);*/
   //startup animations
   TweenLite.to(document.getElementById("content"),0,{visibility:"visible", delay:1});
   TweenLite.to(document.getElementById("content"),1,{opacity:1, delay:1}); 
