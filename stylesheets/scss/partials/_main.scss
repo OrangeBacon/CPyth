@@ -1,0 +1,193 @@
+html,
+body {
+  margin:0;
+  @include prefix((user-select: none),moz webkit ms);
+  cursor:default;
+  font-family:'Roboto', sans-serif;
+  background-color:$background;
+  overflow:hidden;
+}
+#content {
+  width:100%;
+  position:absolute;
+  top:3em;
+  background-color:$background;
+  opacity:0;
+  visibility:hidden;
+}
+#overlay {
+  z-index:10000;
+  position:fixed;
+  @include size(100%);
+  background-color:$background;
+  top:0em;
+  opacity:0;
+  visibility:hidden;
+}
+#overlay-title,
+#overlay-text {
+  text-align:center;
+  color:$text;
+}
+#content {
+  text-align:center;
+}
+#content-console {
+  border:2px solid black;
+  height:90%;
+  width:49%;
+  display:inline-block;
+  @include prefix((border-radius: 5px), webkit moz);
+  margin-top:2%;
+  text-align:start;
+  background-color:$content;
+  position:relative;
+}
+#content-codemirror {
+  border:2px solid black;
+  height:90%;
+  width:49%;
+  display:inline-block;
+  @include prefix((border-radius: 5px), webkit moz);
+  margin-top:2%;
+  text-align:start;
+}
+#content-console-input {
+  border-top: 2px solid black;
+  background-color: $background;
+  height: 2em;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  @include prefix((border-radius: 0 0 1px 2px),webkit moz);
+}
+#content-console-input-form-text {
+  padding: 0;
+  outline: 0;
+  width: 90%;
+  height: 100%;
+  background-color: $background;
+  border: 0;
+  color: $text;
+  padding-left: 1em;
+}
+#content-console-input-form {
+  height:100%;
+}
+#content-console-input-form-submit {
+  display:none;
+}
+#content-console-output-main {
+  background-color: $content;
+  height: calc(100% - 2.2em);
+  width: 100%;
+  position: absolute;
+  top:0;
+  @include prefix((border-radius: 0 0 2px 2px), webkit moz);
+  overflow-y:scroll;
+  word-wrap:break-word;
+}
+#content-console-output-main > p.info {
+  padding-left:1em;
+  color:#A4C7ED;
+}
+#content-console-output-main > p.info:before {
+  content:"\25BA";
+  padding-right:0.5em;
+  color:#A4C7ED;
+}
+#content-console-output-main > p.error {
+  padding-left:1em;
+  color:#FA5555;
+}
+#content-console-output-main > p.error:before {
+  content:"\25BA";
+  padding-right:0.5em;
+  color:#FA5555;
+}
+#content-console-output-main > p.warning {
+  padding-left:1em;
+  color:#DCE362;
+}
+#content-console-output-main> p.warning:before {
+  content:"\25BA";
+  padding-right:0.5em;
+  color:#DCE362;
+}
+#content-console-output-main > p.text {
+  padding-left:1em;
+  color:$text;
+}
+#content-codemirror {
+  position:relative;
+}
+#content-codemirror-container {
+  position:absolute;
+  width:100%;
+  height:100%;
+}
+.CodeMirror {
+  height:100%;
+}
+#windows,.window-container {
+  height:100%;
+  width:100%;
+  position:absolute;
+  top:0;
+  pointer-events:none;
+}
+.window {
+  height:30%;
+  width:30%;
+  background-color:$content;
+  position:relative;
+  resize:both;
+  overflow:auto;
+  pointer-events:all;
+  @include prefix((border-radius: 5px), webkit moz);
+  border: 2px solid black;
+  cursor:default!important;
+}
+.window-header {
+  width: 100%;
+  height: 1em;
+  background-color: $content;
+  cursor:move!important;
+}
+.window-header-close {
+  float: right;
+  width: 2em;
+  height: 100%;
+  background-color: $content;
+  border-left: 2px solid black;
+  box-sizing: border-box;
+  border-bottom: 2px solid black;
+  text-align: center;
+}
+ .window-header-close-text, .window-header-dock-text {
+  margin: 0;
+  top: 0;
+  position: absolute;
+  text-align: center;
+  width: 1.9em;
+  line-height: 0.95em;
+  cursor:pointer;
+  color:$text;
+}
+.window-header-dock {
+  float: right;
+  width: 2em;
+  height: 100%;
+  background-color: $content;
+  border-left: 2px solid black;
+  box-sizing: border-box;
+  border-bottom: 2px solid black;
+  border-bottom-left-radius:5px;
+}
+.window-header-title {
+  margin:0;
+  color:$text;
+  cursor:default;
+  padding-left:1em;
+  cursor:inherit;
+}

@@ -1,0 +1,32 @@
+/*This will be where the main css will be */
+$background: #464444;
+$content: #262626;
+$text: white;
+$menu-border: $background;
+$menu-background: $content;
+$codemirror-highlight: rgba(221, 240, 255, .2);
+$codemirror-cursor: white;
+$codemirror-comment: #A6C6FF;
+$codemirror-atom:#DE8E30;
+$codemirror-number:#CCC;
+$codemirror-property:#8F938F;
+$codemirror-attribute:#a6e22e;
+$codemirror-keyword:#AEB2F8;
+$codemirror-string:#66A968;
+$codemirror-variable:#AEB2F8;
+$codemirror-variable-2:#BEBF55;
+$codemirror-variable-3:#DE8E30;
+$codemirror-def:#757aD8;
+$codemirror-bracket:#757aD8;
+$codemirror-tag:#C1C144;
+$codemirror-link:#ae81ff;
+$codemirror-builtin:#C1C144;
+
+@import 'partials/foot';
+@import 'partials/header';
+@import 'partials/overlay';
+@import 'partials/lib';
+@import 'partials/scroll';
+@import 'partials/main';
+@import 'mixins/mixins';
+

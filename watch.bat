@@ -1,0 +1,1 @@
+start scss --watch %cd%/stylesheets/scss:%cd%/stylesheets

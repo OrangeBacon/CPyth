@@ -1,3 +1,8 @@
 <div id="overlay-colour">
-  <p id="overlay-colour-title">Change Colour Scheme</p>
+  <form action="#">
+    <label for="light">Light</label>
+    <input type="radio" name="theme" onclick="ui.changeTheme('light')" id="light">
+	<label for="dark">Dark</label>
+	<input type="radio" name="theme" onclick="ui.changeTheme('dark')" id="dark">
+  </form>
 </div>

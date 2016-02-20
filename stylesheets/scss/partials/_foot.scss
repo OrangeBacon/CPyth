@@ -1,15 +1,15 @@
 /*css for the footer*/
+@import 'mixins/mixins';
 #foot {
   position: fixed;
   bottom: 0;
-  width: 100%;
-  height: 2em;
-  background-color: #262626;
+  @include size(100%,2em);
+  background-color: $content;
   z-index:100;
 }
 #foot-expand {
   position: relative;
-  color: white;
+  color: $text;
   bottom: 0.5em;
   left: 1em;
   cursor: pointer;
@@ -17,7 +17,7 @@
 }
 #foot a,
 #foot span {
-  color:white;
+  color:$text;
 }
 #foot-links {
   padding-left:1em;

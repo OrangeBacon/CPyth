@@ -1,10 +1,10 @@
+@import 'mixins/mixins';
 #overlay-colour-title {
-  color:white;
+  color:$text;
   padding-left:1em;
 }
 #overlay-colour{
-  height: 100%;
-  width: 100%;
+  width:100%;
   position: absolute;
 }
 li {

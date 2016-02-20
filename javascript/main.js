@@ -1,4 +1,5 @@
 //Main Javascript file
+"use strict";
 //==============================
 //== User Interface Functions ==
 //==============================
@@ -66,9 +67,9 @@ function ui(){
       this.footOpacity = 2;
     };
     if(this.footOpacity!=0){
-      document.getElementById("nav-menu-hide").innerHTML = "Hide Footer";
+      document.getElementById("nav-menu-settings-hide").innerHTML = "Hide Footer";
     }else{
-      document.getElementById("nav-menu-hide").innerHTML = "Show Footer";
+      document.getElementById("nav-menu-settings-hide").innerHTML = "Show Footer";
     };
     TweenLite.to(document.getElementById("foot"),0.5,{height:this.footOpacity+"em"});
   };
@@ -101,34 +102,6 @@ function ui(){
     TweenLite.to(document.getElementById("overlay"),0.5,{opacity:"0"});
     TweenLite.to(document.getElementById("nav-menu-about"),0,{visibility:"hidden",delay:0.5});
   };
-  //load external (same domain, diffrent page) html into the console window eg forms
-  this.overlay = function(file) {
-    //iframe method - depreciated
-    /*var frame = document.createElement('iframe');
-	frame.src = file;
-	frame.id = "content-console-output-overlay-iframe";
-	document.getElementById('content-console-output-overlay').appendChild(frame);
-	TweenLite.to(document.getElementById("content-console-output-main"),1,{opacity:"0"});
-	TweenLite.to(document.getElementById('content-console-input'),1,{height:0});*/
-	//ajax get method - current
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (xhttp.readyState == 4 && xhttp.status == 200) {
-        ui.outDoc = xhttp.responseText;
-		document.getElementById('content-console-output-overlay').innerHTML = ui.outDoc;
-	    TweenLite.to(document.getElementById("content-console-output-main"),1,{opacity:"0"});
-		TweenLite.to(document.getElementById('content-console-input'),1,{height:0});
-      };
-    };
-    xhttp.open("GET", file, true);
-    xhttp.send();
-  };
-  //remove console window external html
-  this.closeOverlay = function() {
-    TweenLite.to(document.getElementById("content-console-output-main"),0,{opacity:"1"});
-	TweenLite.to(document.getElementById('content-console-input'),1,{height:'2em'});
-	document.getElementById('content-console-output-overlay').innerHTML = "";
-  };
   this.window = function(content,id,title) {
     Window = ui.windowTemplate;
 	Window = Window.replace(/<id>/g,id);
@@ -160,45 +133,49 @@ function ui(){
       xhttp.send();
 	};
   };
+  this.changeTheme = function(name){
+    document.getElementById('theme').setAttribute('href','stylesheets/'+name+'.css');
+  };
 };
 
 //===================================
 //== Console Interaction Functions ==
 //===================================
 function console(){
+  this.element;
   //external reference
   console = this;
   //add error to console
   this.codeError = function(message){
-    element = document.createElement("p");
-    element.setAttribute("title","Error");
-    element.setAttribute("class","error");
-    element.innerHTML = message;
-    document.getElementById('content-console-output-main').insertBefore(element,document.getElementById('content-console-output-main-bottom'))
+    var node = document.createElement("p");
+    var textnode = document.createTextNode(message);
+    node.appendChild(textnode);
+	node.setAttribute("class","error");
+    document.getElementById("content-console-output-main").appendChild(node);
   };
   //add warning to console
   this.codeWarning = function(message){
-    var element = document.createElement("p");
-    element.setAttribute("title","Warning");
-    element.setAttribute("class","warning");
-    element.innerHTML = message;
-    document.getElementById('content-console-output-main').insertBefore(element,document.getElementById('content-console-output-main-bottom'))
+    var node = document.createElement("p");
+    var textnode = document.createTextNode(message);
+    node.appendChild(textnode);
+	node.setAttribute("class","warning");
+    document.getElementById("content-console-output-main").appendChild(node);
   };
   //add info to console
   this.codeInfo = function(message){
-    element = document.createElement("p");
-    element.setAttribute("title","Info");
-    element.setAttribute("class","info");
-    element.innerHTML = message;
-    document.getElementById('content-console-output-main').insertBefore(element,document.getElementById('content-console-output-main-bottom'))
+    var node = document.createElement("p");
+    var textnode = document.createTextNode(message);
+    node.appendChild(textnode);
+	node.setAttribute("class","info");
+    document.getElementById("content-console-output-main").appendChild(node);
   };
   //add general text to console
   this.codeText = function(message){
-    element = document.createElement("p");
-    element.setAttribute("title","Text");
-    element.setAttribute("class","text");
-    element.innerHTML = message;
-    document.getElementById('content-console-output-main').insertBefore(element,document.getElementById('content-console-output-main-bottom'))
+    var node = document.createElement("p");
+    var textnode = document.createTextNode(message);
+    node.appendChild(textnode);
+	node.setAttribute("class","text");
+    document.getElementById("content-console-output-main").appendChild(node);
   };
   //print help - currently rubbish :)
   this.help = function(){
@@ -364,22 +341,24 @@ function main(){
 //==============================
 function init() {
   //event listeners
-  document.getElementById('nav-menu-about-code').addEventListener("click",function(){window.location.href ='https://github.com/ScratchOs/CPyth/tree/gh-pages';});
-  document.getElementById('nav-menu-about-lang').addEventListener("click",function(){window.location.href ='https://github.com/ScratchOs/CPyth/blob/master/Syntax.md#cpyth';});
+  document.getElementById('nav-menu-about-code').addEventListener("click",function(){window.open('https://github.com/ScratchOs/CPyth/tree/gh-pages');});
+  document.getElementById('nav-menu-about-lang').addEventListener("click",function(){window.open('https://github.com/ScratchOs/CPyth/blob/master/Syntax.md#cpyth');});
+  document.getElementById('nav-menu-settings-colour').addEventListener("click",function(){ui.httpWindow('ui/colour.html','colour','Change Colour Scheme');});
   document.getElementById('content-console-input-form').addEventListener("submit", function(event){main.mainInterpreter.runCode(event,document.getElementById('content-console-input-form-text').value)},true);
   document.addEventListener("click",function(event){ui.closeMenus(event);},true);
   document.getElementById('foot-expand').addEventListener("click",function(){ui.footExpand();});
   document.getElementById('nav-links-about').addEventListener("click",function(){ui.menuAbout()});
   document.getElementById('nav-links-settings').addEventListener("click",function(){ui.menuSettings()});
-  document.getElementById('nav-menu-hide').addEventListener("click",function(){ui.footVisibility()});
+  document.getElementById('nav-menu-settings-hide').addEventListener("click",function(){ui.footVisibility()});
   document.getElementById('nav-menu-about-help').addEventListener("click",function(){console.help()});
   /*document.getElementById('content-console-input-form').addEventListener("keydown",function(e){console.codeWarning(e)},true);*/
   //startup animations
   TweenLite.to(document.getElementById("content"),0,{visibility:"visible", delay:1});
   TweenLite.to(document.getElementById("content"),1,{opacity:1, delay:1}); 
   setInterval(function(){ui.mainHeightSet();},1);
- // make codemirror
-  var myCodeMirror = CodeMirror(document.getElementById("content-codemirror-container"),{lineNumbers: true,theme: "pastel-on-dark",viewportMargin:Infinity,fixedGutter:true});
+  // make codemirror
+  var host = document.getElementById("content-codemirror-container");
+  var myCodeMirror = CodeMirror(host,{lineNumbers: true,theme: "pastel-on-dark",viewportMargin:Infinity,fixedGutter:true});
   //redirect if not ? domain
   if(window.location.href.indexOf('?') <= -1){
     window.location.href ='https://scratchos.github.io/CPyth/?';
@@ -391,6 +370,8 @@ function init() {
 //==============
 //== Load App ==
 //==============
+var leftscroll;
+var rightscroll;
 window.onload = function(){
   //create UI and console functions
   new main();
