@@ -1,0 +1,97 @@
+html[docs] {
+  padding:1em;
+  color:$text;
+  background-color:$content;
+  overflow:visible;
+  body {
+    background-color:$content;
+	overflow:visible;
+  }
+  h1 {
+    text-align:center;
+	color:$text;
+	text-decoration:underline;
+  }
+  h2 {
+    text-decoration:underline;
+  }
+  body > .description {
+    text-align:center;
+  }
+  p {
+    margin:0;
+  }
+  .code > .description:after,
+  .code > .parameters:after,
+  .code > .return:after  {
+    padding:1em;
+	content:"";
+  }
+  .code > .description:before {
+    content: "Description";
+	font-weight:bold;
+  }
+  .code > .parameters:before {
+    content: "Parameters";
+	font-weight:bold;
+  }
+  .code > .return:before {
+    content: "Return";
+	font-weight:bold;
+  }
+  .code > .return > p.type:before{
+    content:"Value: "
+  }
+  .number > p {
+    display:inline;
+  }
+  .number > .type {
+    color: $codemirror-number;
+  }
+  .list {
+    width: 20%;
+	height: 100%;
+	float: left;
+	/* overflow-y: scroll; */
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 1em 1em 1em 1em;
+	box-sizing: border-box;
+  }
+  .desc {
+    width: 80%;
+	float: right;
+	margin:0;
+  }
+  input#submit {
+	border-radius: 0 5px 5px 0;
+	font-family: 'Roboto', sans-serif;
+	border: 2px solid $background;
+	border-left: 0;
+	padding: 0.2em;
+	outline:0;
+  }
+  input#submit:active {
+    color:blue;
+  }
+  input#search {
+	border-radius: 5px 0 0 5px;
+	box-shadow: none;
+	font-family: 'Roboto', sans-serif;
+	border: 2px solid $background;
+	border-right: 0;
+	padding: 0.2em;
+	outline:0;
+  }
+  a {
+    color:$text;
+	text-decoration:none;
+  }
+  a:hover {
+    text-decoration:underline;
+  }
+  a:before {
+    content:"\25BA "
+  }
+}

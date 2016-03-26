@@ -1,4 +1,17 @@
-/*This will be where the main css will be */
+@charset "UTF-8";
+/* 
+@docs
+@breakpoint "Hi"
+@title "Themes"
+@desc "Description of the variables in each theme"
+*/
+/*
+@code
+  @name $background
+  @description
+    @text "The main background colour used in CPyth"
+  @end
+*/
 /*css for the footer*/
 #foot {
   position: fixed;
@@ -931,5 +944,82 @@ body {
   cursor: default;
   padding-left: 1em;
   cursor: inherit; }
+
+html[docs] {
+  padding: 1em;
+  color: black;
+  background-color: #dbdbdb;
+  overflow: visible; }
+  html[docs] body {
+    background-color: #dbdbdb;
+    overflow: visible; }
+  html[docs] h1 {
+    text-align: center;
+    color: black;
+    text-decoration: underline; }
+  html[docs] h2 {
+    text-decoration: underline; }
+  html[docs] body > .description {
+    text-align: center; }
+  html[docs] p {
+    margin: 0; }
+  html[docs] .code > .description:after,
+  html[docs] .code > .parameters:after,
+  html[docs] .code > .return:after {
+    padding: 1em;
+    content: ""; }
+  html[docs] .code > .description:before {
+    content: "Description";
+    font-weight: bold; }
+  html[docs] .code > .parameters:before {
+    content: "Parameters";
+    font-weight: bold; }
+  html[docs] .code > .return:before {
+    content: "Return";
+    font-weight: bold; }
+  html[docs] .code > .return > p.type:before {
+    content: "Value: "; }
+  html[docs] .number > p {
+    display: inline; }
+  html[docs] .number > .type {
+    color: #CCC; }
+  html[docs] .list {
+    width: 20%;
+    height: 100%;
+    float: left;
+    /* overflow-y: scroll; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1em 1em 1em 1em;
+    box-sizing: border-box; }
+  html[docs] .desc {
+    width: 80%;
+    float: right;
+    margin: 0; }
+  html[docs] input#submit {
+    border-radius: 0 5px 5px 0;
+    font-family: 'Roboto', sans-serif;
+    border: 2px solid white;
+    border-left: 0;
+    padding: 0.2em;
+    outline: 0; }
+  html[docs] input#submit:active {
+    color: blue; }
+  html[docs] input#search {
+    border-radius: 5px 0 0 5px;
+    box-shadow: none;
+    font-family: 'Roboto', sans-serif;
+    border: 2px solid white;
+    border-right: 0;
+    padding: 0.2em;
+    outline: 0; }
+  html[docs] a {
+    color: black;
+    text-decoration: none; }
+  html[docs] a:hover {
+    text-decoration: underline; }
+  html[docs] a:before {
+    content: "►"; }
 
 /*# sourceMappingURL=light.css.map */

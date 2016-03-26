@@ -1,0 +1,39 @@
+code
+code
+/* @docs @breakpoint main-scss-docs-2 */
+/* @title "SCSS mixins" */
+/* @desc "Mixins used in CPyth's SCSS files" */
+code
+code
+/* @code
+ *   @name "Size mixin"
+ *   @description
+ *     @text "A scss mixin that can set the height and width properties at the same time."
+ *     @text "If the width is not provided, the default is the height, making it square."
+ *   @end
+ *   @parameters
+ *     @param height number "The height that you want it to be."
+ *     @param width number "The width that you want it to be."
+ *   @end
+ *   @return none "Mixins do not return values, instead set css values"
+ * @end */
+code
+code
+code
+code
+code
+code
+/* @code
+ *   @name "Size mixin"
+ *   @description
+ *     @text "A scss mixin that can set the height and width properties at the same time."
+ *     @text "If the width is not provided, the default is the height, making it square."
+ *   @end
+ *   @parameters
+ *     @param height number "The height that you want it to be."
+ *     @param width number "The width that you want it to be."
+ *   @end
+ *   @return none "Mixins do not return values, instead set css values"
+ * @end */
+code
+code

@@ -1,4 +1,17 @@
-/*This will be where the main css will be */
+//This will be where the main css will be
+/* 
+@docs
+@breakpoint "Hi"
+@title "Themes"
+@desc "Description of the variables in each theme"
+*/
+/*
+@code
+  @name $background
+  @description
+    @text "The main background colour used in CPyth"
+  @end
+*/
 $background: white;
 $content: #dbdbdb;
 $text: black;
@@ -28,4 +41,5 @@ $codemirror-builtin:#C1C144;
 @import 'partials/lib';
 @import 'partials/scroll';
 @import 'partials/main';
+@import 'partials/docs';
 @import 'mixins/mixins';

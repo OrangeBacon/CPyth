@@ -341,8 +341,8 @@ function main(){
 //==============================
 function init() {
   //event listeners
-  document.getElementById('nav-menu-about-code').addEventListener("click",function(){window.open('https://github.com/ScratchOs/CPyth/tree/gh-pages');});
-  document.getElementById('nav-menu-about-lang').addEventListener("click",function(){window.open('https://github.com/ScratchOs/CPyth/blob/master/Syntax.md#cpyth');});
+  document.getElementById('nav-menu-about-code').addEventListener("click",function(){window.open('https://github.com/ScratchOs/CPyth/tree/gh-pages','_blank','location=yes');});
+  document.getElementById('nav-menu-about-lang').addEventListener("click",function(){window.open('https://github.com/ScratchOs/CPyth/blob/gh-pages/syntax2.md', '_blank', 'location=yes');});
   document.getElementById('nav-menu-settings-colour').addEventListener("click",function(){ui.httpWindow('ui/colour.html','colour','Change Colour Scheme');});
   document.getElementById('content-console-input-form').addEventListener("submit", function(event){main.mainInterpreter.runCode(event,document.getElementById('content-console-input-form-text').value)},true);
   document.addEventListener("click",function(event){ui.closeMenus(event);},true);
@@ -351,10 +351,10 @@ function init() {
   document.getElementById('nav-links-settings').addEventListener("click",function(){ui.menuSettings()});
   document.getElementById('nav-menu-settings-hide').addEventListener("click",function(){ui.footVisibility()});
   document.getElementById('nav-menu-about-help').addEventListener("click",function(){console.help()});
-  /*document.getElementById('content-console-input-form').addEventListener("keydown",function(e){console.codeWarning(e)},true);*/
+  //document.getElementById('content-console-input-form').addEventListener("keydown",function(e){console.codeWarning(e)},true);
   //startup animations
   TweenLite.to(document.getElementById("content"),0,{visibility:"visible", delay:1});
-  TweenLite.to(document.getElementById("content"),1,{opacity:1, delay:1}); 
+  TweenLite.to(document.getElementById("content"),1,{opacity:1, delay:1});
   setInterval(function(){ui.mainHeightSet();},1);
   // make codemirror
   var host = document.getElementById("content-codemirror-container");
@@ -370,8 +370,6 @@ function init() {
 //==============
 //== Load App ==
 //==============
-var leftscroll;
-var rightscroll;
 window.onload = function(){
   //create UI and console functions
   new main();

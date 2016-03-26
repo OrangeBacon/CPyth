@@ -9,4 +9,4 @@
 8. [ ] Add interpretation of other languages
 9. [ ] Add up arrow history to the input box, like in Webkit's Js console
 10. [ ] Create dragable dialouge box API for file addition, saving  etc. 
-11. [ ] Create dragable window API for adding  HTML pages into the page, E.G. Tutorial
+11. [x] Create dragable window API for adding  HTML pages into the page, E.G. Tutorial

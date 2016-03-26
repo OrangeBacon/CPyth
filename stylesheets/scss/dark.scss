@@ -1,6 +1,33 @@
-/*This will be where the main css will be */
+//This will be where the main css will be
+/*
+@docs
+@breakpoint Themes
+@title "Themes"
+@desc "Description of the variables in each theme"
+*/
+/*
+@code
+  @name $background
+  @description
+    @text "The main background colour used in CPyth"
+  @end
+*/
 $background: #464444;
+/*
+@code
+  @name $content
+  @description
+    @text "The main content colour used in CPyth"
+  @end
+*/
 $content: #262626;
+/*
+@code
+  @name $text
+  @description
+    @text "The main text colour used in CPyth"
+  @end
+*/
 $text: white;
 $menu-border: $background;
 $menu-background: $content;
@@ -28,5 +55,5 @@ $codemirror-builtin:#C1C144;
 @import 'partials/lib';
 @import 'partials/scroll';
 @import 'partials/main';
+@import 'partials/docs';
 @import 'mixins/mixins';
-
