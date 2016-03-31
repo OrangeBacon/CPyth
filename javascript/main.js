@@ -134,7 +134,7 @@ function ui(){
 	};
   };
   this.changeTheme = function(name){
-    document.getElementById('theme').setAttribute('href','stylesheets/'+name+'.css');
+    document.getElementById('theme').setAttribute('href','stylesheets/'+name+'-main.css');
   };
 };
 
@@ -335,7 +335,6 @@ function main(){
   };
   this.init();
 };
-
 //==============================
 //== Initialisation functions ==
 //==============================

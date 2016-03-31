@@ -191,3 +191,18 @@ body {
   padding-left:1em;
   cursor:inherit;
 }
+@media only screen and(max-width:600px) {
+  #content-console,
+  #content-codemirror  {
+    @include size(95%);
+  }
+  #content {
+    overflow-y:scroll;
+  }
+  #foot {
+    display:none;
+  }
+  #nav-menu-settings-hide {
+    display:none;
+  }
+}
