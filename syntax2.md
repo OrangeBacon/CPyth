@@ -20,7 +20,7 @@ Each function has a name and then is called by that name with either arguments o
 
 ## Calling Functions and Variables
 
-There are two ways of calling functions.  The first one is `[<arg>,<arg>,<...>] => <name>` This pushes the list of arguments into the function with the specified name.  The second way is like `call [<arg>,<arg>,<...>] => <name>`.  This method must be used for user defined functions and can be used for built in functions.  To get the return value of a function you must contain the function call in brackets `()`.  An example is `([<arg>,<arg>,<...>] => <name>)` would output the return value of the function.  To get the value of variables you type `<name>` and to assign a value to a variable you use `<value> => <name>`.  All functions are objects so by getting them you can get the code inside the function.
+There are two ways of calling functions.  The first one is `<name>[<arg>,<arg>,<...>]` This pushes the list of arguments into the function with the specified name.  The second way is like `call <name>[<arg>,<arg>,<...>]`.  This method must be used for user defined functions and can be used for built in functions.  To get the return value of a function you must contain the function call in brackets `()`.  An example is `(<name>[<arg>,<arg>,<...>])` would output the return value of the function.  If you do not use the brackets it will interpret the function as an unevaluated input.  To get the value of variables you type `<name>` and to assign a value to a variable you use `<name> <= <value>`.  All functions are objects so by getting them you can get the code inside the function.
 
 ## Data Types
 
@@ -31,7 +31,7 @@ There are two ways of calling functions.  The first one is `[<arg>,<arg>,<...>] 
 * float: a number that can contain decimals and can be any length, positive or negative.
 * array: a sequence of values enclosed between square brackets `[]` and separated by commas `,`.  The value of it is accessed `<id> => [<value>,<value>,<...>]` where id is the index of the item that you want to find starting with 0.
 * dict: an associative array, defined as `[<name>:<value>,<name>:<value>,<...>]` and accessed as `<name> => [<name>:<value>,<name>:<value>,<...>]`.
-* obj: an object is a data type that can contain other functions and variables.  They can be used to prevent data leaking into the global scope or can be used to represent tree like information.  They are surrounded with curly braces `{}`, each viewable piece of code from outside the object is written as `<name>:<code>`.  To access the functions in objects you can use `[<arg>,<arg>,<...>] => <obj>.<name>` and to get the value of that you surround it in brackets.  To get the value of a variable in the object you use `<obj>.<name>` and brackets are not needed to get the value.
+* obj: an object is a data type that can contain other functions and variables.  They can be used to prevent data leaking into the global scope or can be used to represent tree like information.  They are surrounded with curly braces `{}`, each viewable piece of code from outside the object is written as `<name>:<code>`.  To access the functions in objects you can use `<obj>.<name>[<arg>,<arg>,<...>]` and to get the value of that you surround it in brackets.  To get the value of a variable in the object you use `<obj>.<name>` and brackets are not needed to get the value.
 
 ## Commands
 
@@ -41,13 +41,13 @@ Commands are sections of code that can be executed, for example a function defin
 
 Loops such as the for and while loop are defined as:
 ```
-[<var>,<start>,<end>,<step>] => for in:
+for[<var>,<start>,<end>,<step>] in:
   <code>
  end
  ```
 The while loop is:
 ```
-[cond] => while in:
+while[cond]:
   <code>
 end
 ```
@@ -58,11 +58,17 @@ Conditions are lines of code that evaluate to a Boolean value.  They are surroun
 
 ## Maths
 
-There are several maths commands that can be used.  Maths statements have to be surrounded by brackets `()` to use them.  There are the basic maths commands such as add, divide and power.  They use the correct order of operations and can be used like `<value><command><value>` for example `(1+2*(5.3/4)) => a;` which would set a to 3.65.  
+There are several maths commands that can be used.  Maths statements have to be surrounded by brackets `()` to use them.  There are the basic maths commands such as add, divide and power.  They use the correct order of operations and can be used like `<value><command><value>` for example `a <= (1+2*(5.3/4));` which would set a to 3.65.  
 
 ## Comments
 
 Single line comments are placed after `#` and multi-line comments are placed between `###` like `### multi line comment ###`.  The single line comments make everything on the line after it a comment.
+
+## Builtin Functions
+
+* Assignment Operator: `=>` This is used for the first assignment of a variable, it sets the variable on the left to an instance of the value on the right. 
+* Value Operator: `<=` Pushes a value on the right into a variable on the left.
+* Return Operator: `()` Evaluates the content and returns it.
 
 ## Example Program
 
@@ -70,9 +76,7 @@ Single line comments are placed after `#` and multi-line comments are placed bet
 # Get two user inputted floats, multiply them together and output the result.
 define float inp1 => void;
 define float inp2 => void;
-["number 1"] => print;
-[inp1] => input;
-["multiplied by"] => print;
-[inp2] => input;
-[([inp1] => str) + "multiplied by" + ([inp2] => str) "=" ([(inp1*inp2)] => str)] => print
+inp1 <= input["number 1"];
+inp2 <= input["multiplied by"];
+print[(str[inp1]) + "*" + (str[inp2]) "=" (str[(inp1*inp2)])];
 ```
