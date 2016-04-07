@@ -70,6 +70,10 @@ Single line comments are placed after `#` and multi-line comments are placed bet
 * Value Operator: `<=` Pushes a value on the right into a variable on the left.
 * Return Operator: `()` Evaluates the content and returns it.
 
+## Unevaluated Inputs
+
+Unevaluated inputs are where the input is not calculated.  This means that you can run the input multiple times with different values. This could be used, for example for maping a function over a list.  To use an unevaluated input, use the function or expression without the brackets surounding it.  To use an unevaluated input, `call <name> with [<inp>:<value>,<inp>:<value>]` or you can call it without the input `call <name>`.  
+
 ## Example Program
 
 ```
