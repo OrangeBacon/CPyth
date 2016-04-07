@@ -1,9 +1,8 @@
-function search(str) {
+function search() {
+  str = document.getElementById("search").value;
   str = str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
   re = new RegExp(str,'i');
-  console.log(re)
   el = document.getElementById('results').childNodes;
-  console.log(el);
   for(var i = 0;i < el.length; i++){
     if(el[i].getAttribute('data-value').search(re)!=-1){
 	  el[i].style.display = 'block';
@@ -12,3 +11,4 @@ function search(str) {
 	}
   }
 }
+setInterval(search,10)

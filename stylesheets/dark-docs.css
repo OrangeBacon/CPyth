@@ -535,81 +535,95 @@ span.CodeMirror-selectedtext {
 ::-webkit-scrollbar-corner {
   background: black; }
 
-html[docs] {
+html {
   padding: 1em;
   color: white;
   background-color: #262626;
+  overflow: visible;
+  font-family: 'Roboto', sans-serif;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+body {
+  background-color: #262626;
   overflow: visible; }
-  html[docs] body {
-    background-color: #262626;
-    overflow: visible; }
-  html[docs] h1 {
-    text-align: center;
-    color: white;
-    text-decoration: underline; }
-  html[docs] h2 {
-    text-decoration: underline; }
-  html[docs] body > .description {
-    text-align: center; }
-  html[docs] p {
-    margin: 0; }
-  html[docs] .code > .description:after,
-  html[docs] .code > .parameters:after,
-  html[docs] .code > .return:after {
-    padding: 1em;
-    content: ""; }
-  html[docs] .code > .description:before {
-    content: "Description";
-    font-weight: bold; }
-  html[docs] .code > .parameters:before {
-    content: "Parameters";
-    font-weight: bold; }
-  html[docs] .code > .return:before {
-    content: "Return";
-    font-weight: bold; }
-  html[docs] .code > .return > p.type:before {
-    content: "Value: "; }
-  html[docs] .number > p {
-    display: inline; }
-  html[docs] .number > .type {
-    color: #CCC; }
-  html[docs] .list {
-    width: 20%;
-    height: 100%;
-    float: left;
-    /* overflow-y: scroll; */
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding: 1em 1em 1em 1em;
-    box-sizing: border-box; }
-  html[docs] .desc {
-    width: 80%;
-    float: right;
-    margin: 0; }
-  html[docs] input#submit {
-    border-radius: 0 5px 5px 0;
-    font-family: 'Roboto', sans-serif;
-    border: 2px solid #464444;
-    border-left: 0;
-    padding: 0.2em;
-    outline: 0; }
-  html[docs] input#submit:active {
-    color: blue; }
-  html[docs] input#search {
-    border-radius: 5px 0 0 5px;
-    box-shadow: none;
-    font-family: 'Roboto', sans-serif;
-    border: 2px solid #464444;
-    border-right: 0;
-    padding: 0.2em;
-    outline: 0; }
-  html[docs] a {
-    color: white;
-    text-decoration: none; }
-  html[docs] a:hover {
-    text-decoration: underline; }
-  html[docs] a:before {
-    content: "►"; }
+
+h1 {
+  text-align: center;
+  color: white;
+  text-decoration: underline; }
+
+h2 {
+  text-decoration: underline; }
+
+body > .description {
+  text-align: center; }
+
+p {
+  margin: 0; }
+
+.code > .description:after,
+.code > .parameters:after,
+.code > .return:after {
+  padding: 1em;
+  content: ""; }
+
+.code > .description:before {
+  content: "Description";
+  font-weight: bold; }
+
+.code > .parameters:before {
+  content: "Parameters";
+  font-weight: bold; }
+
+.code > .return:before {
+  content: "Return";
+  font-weight: bold; }
+
+.code > .return > p.type:before {
+  content: "Value: "; }
+
+.number > p {
+  display: inline; }
+
+.number > .type {
+  color: #CCC; }
+
+.list {
+  width: 20%;
+  height: 100%;
+  float: left;
+  overflow-y: scroll;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1em 1em 1em 1em;
+  box-sizing: border-box; }
+
+.desc {
+  width: 80%;
+  float: right;
+  margin: 0; }
+
+input#search {
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: none;
+  font-family: 'Roboto', sans-serif;
+  border: 2px solid #464444;
+  padding: 0.2em;
+  outline: 0; }
+
+a {
+  color: white;
+  text-decoration: none; }
+
+a:hover {
+  text-decoration: underline; }
+
+a:before {
+  content: "►"; }
 
 /*# sourceMappingURL=dark-docs.css.map */

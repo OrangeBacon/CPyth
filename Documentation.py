@@ -8,7 +8,7 @@ import sys
 
 unwhitespace = re.compile(r"^(\s|\*)+",re.MULTILINE)
 uncomment = re.compile(r"(^|\*\/)[\w\W]*?(\/\*|$)")
-header = "<!DOCTYPE html><html docs><head><title>{title}</title><meta name='viewport' content='width=device-width'><meta charset='utf-8'><script src='../javascript/docs.js'></script><link href='../stylesheets/dark-docs.css' rel='stylesheet' type='text/css' id='theme'></head><body><div class='list'><h2>Documentation Topics</h2><form onsubmit='return false;'><input id='search'><input type='submit' value='Search' id='submit' onclick='search(document.getElementById(\"search\").value)'></form><div id='results'>{topics}</div></div><div class='desc'>"
+header = "<!DOCTYPE html><html docs><head><title>{title}</title><meta name='viewport' content='width=device-width'><meta charset='utf-8'><script src='../javascript/docs.js'></script><link href='../stylesheets/dark-docs.css' rel='stylesheet' type='text/css' id='theme'></head><body><div class='list'><h2>Documentation Topics</h2><form onsubmit='return false;'><input id='search' autocomplete='off' placeholder='Search'></form><div id='results'>{topics}</div></div><div class='desc'>"
 end = "</div></body></html>"
 
 def tokeniser(docs):
