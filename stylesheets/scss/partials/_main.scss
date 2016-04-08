@@ -50,6 +50,7 @@ body {
   display:inline-block;
   @include prefix((border-radius: 5px), webkit moz);
   margin-top:2%;
+  background-color:$content;
   text-align:start;
 }
 #content-console-input {
@@ -123,11 +124,25 @@ body {
 }
 #content-codemirror-container {
   position:absolute;
-  width:100%;
-  height:100%;
+  @include size(100%,calc(100% - 4.4em));
+  top:2.2em;
 }
 .CodeMirror {
   height:100%;
+}
+#content-codemirror-actions {
+  @include size(100%,2em);
+  position:absolute;
+  bottom:0;
+  border-top:2px solid black;
+  background-color:$background;
+}
+#content-codemirror-tabs {
+  @include size(100%,2em);
+  position:absolute;
+  top:0;
+  border-bottom:2px solid black;
+  background-color:$background;
 }
 #windows,.window-container {
   height:100%;

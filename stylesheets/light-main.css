@@ -653,6 +653,7 @@ body {
   -moz-border-radius: 5px;
   border-radius: 5px;
   margin-top: 2%;
+  background-color: #dbdbdb;
   text-align: start; }
 
 #content-console-input {
@@ -731,10 +732,27 @@ body {
 #content-codemirror-container {
   position: absolute;
   width: 100%;
-  height: 100%; }
+  height: calc(100% - 4.4em);
+  top: 2.2em; }
 
 .CodeMirror {
   height: 100%; }
+
+#content-codemirror-actions {
+  width: 100%;
+  height: 2em;
+  position: absolute;
+  bottom: 0;
+  border-top: 2px solid black;
+  background-color: white; }
+
+#content-codemirror-tabs {
+  width: 100%;
+  height: 2em;
+  position: absolute;
+  top: 0;
+  border-bottom: 2px solid black;
+  background-color: white; }
 
 #windows, .window-container {
   height: 100%;
