@@ -12,8 +12,6 @@ function ui(){
   this.div;
   this.outDoc;
   this.elements;
-  this.nav = document.getElementById("nav").offsetHeight;
-  this.bottom = document.getElementById("foot").offsetHeight;
   this.doc = window.innerHeight;
   this.windows = [];
   this.window;
@@ -47,38 +45,6 @@ function ui(){
     if(this.menuAboutOpacity === 0){
       TweenLite.to(document.getElementById("nav-menu-about"),0.4,{visibility:"hidden",delay:0.4});
     };
-  };
-  //expand the footer
-  this.footExpand = function() {
-    if (this.footHeight === 2) {
-      this.footHeight = 5;
-      document.getElementById("foot-expand").innerHTML = "Collapse Footer";
-    }else{
-      this.footHeight = 2;
-      document.getElementById("foot-expand").innerHTML = "Expand Footer";
-    };
-    TweenLite.to(document.getElementById("foot"),0.5,{height:this.footHeight+"em"});
-  };
-  //hide the footer
-  this.footVisibility = function(){
-    if(this.footOpacity!=0){
-      this.footOpacity = 0;
-    }else{
-      this.footOpacity = 2;
-    };
-    if(this.footOpacity!=0){
-      document.getElementById("nav-menu-settings-hide").innerHTML = "Hide Footer";
-    }else{
-      document.getElementById("nav-menu-settings-hide").innerHTML = "Show Footer";
-    };
-    TweenLite.to(document.getElementById("foot"),0.5,{height:this.footOpacity+"em"});
-  };
-  //set main wrapper height (run every millisecond)
-  this.mainHeightSet = function(){
-    ui.nav = document.getElementById("nav").offsetHeight;
-    ui.doc = window.innerHeight;
-    ui.bottom = document.getElementById("foot").offsetHeight;
-    document.getElementById("content").style.height = this.doc - this.nav - this.bottom + "px";
   };
   //close the settings and about menus on click elsewhere in document
   this.closeMenus = function(e){
@@ -345,16 +311,10 @@ function init() {
   document.getElementById('nav-menu-settings-colour').addEventListener("click",function(){ui.httpWindow('ui/colour.html','colour','Change Colour Scheme');});
   document.getElementById('content-console-input-form').addEventListener("submit", function(event){main.mainInterpreter.runCode(event,document.getElementById('content-console-input-form-text').value)},true);
   document.addEventListener("click",function(event){ui.closeMenus(event);},true);
-  document.getElementById('foot-expand').addEventListener("click",function(){ui.footExpand();});
   document.getElementById('nav-links-about').addEventListener("click",function(){ui.menuAbout()});
   document.getElementById('nav-links-settings').addEventListener("click",function(){ui.menuSettings()});
-  document.getElementById('nav-menu-settings-hide').addEventListener("click",function(){ui.footVisibility()});
   document.getElementById('nav-menu-about-help').addEventListener("click",function(){console.help()});
   //document.getElementById('content-console-input-form').addEventListener("keydown",function(e){console.codeWarning(e)},true);
-  //startup animations
-  TweenLite.to(document.getElementById("content"),0,{visibility:"visible", delay:1});
-  TweenLite.to(document.getElementById("content"),1,{opacity:1, delay:1});
-  setInterval(function(){ui.mainHeightSet();},1);
   // make codemirror
   var host = document.getElementById("content-codemirror-container");
   var myCodeMirror = CodeMirror(host,{lineNumbers: true,theme: "pastel-on-dark",viewportMargin:Infinity,fixedGutter:true});

@@ -1,27 +1,3 @@
-/*css for the footer*/
-#foot {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 2em;
-  background-color: #dbdbdb;
-  z-index: 100; }
-
-#foot-expand {
-  position: relative;
-  color: black;
-  bottom: 0.5em;
-  left: 1em;
-  cursor: pointer;
-  width: 7em; }
-
-#foot a,
-#foot span {
-  color: black; }
-
-#foot-links {
-  padding-left: 1em; }
-
 /*css for the header*/
 #nav {
   background-color: #dbdbdb;
@@ -609,7 +585,9 @@ body {
   width: 100%;
   position: absolute;
   top: 3em;
-  background-color: white; }
+  background-color: white;
+  text-align: center;
+  height: calc(100% - 2em); }
 
 #overlay {
   z-index: 10000;
@@ -625,9 +603,6 @@ body {
 #overlay-text {
   text-align: center;
   color: black; }
-
-#content {
-  text-align: center; }
 
 #content-console {
   border: 2px solid black;
