@@ -1,4 +1,4 @@
 # CPyth
-CPyth is a programming language that can be used online.  It is currently in development and cannot actually be executed.
-Currently it has several of its features already implemented.
-For development I recommend hosting it on a local web server (I use `py -m http.server 8000` for development)
+
+CPyth is a programing language and Online IDE.
+Dev: please run all batchfiles while developing to succesfuly create the scss and documentation and to have a localhost to view changes from.
