@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<link href='stylesheets/dark-main.css' rel='stylesheet' type='text/css' id="theme">
-    <script src="javascript/main.js"></script>
+	<link href='stylesheets/light-main.css' rel='stylesheet' type='text/css' id="theme">
+    <script src="javascript/new-main.js"></script>
     <script src="javascript/lib.js"></script>
 	<title>CPyth Interpreter</title>
 	<meta charset="utf-8">
@@ -10,25 +10,26 @@
   </head>
   <body>
     <div id="nav">
-      <div id="nav-links">
-        <span title="CPyth Interpreter">CPyth Interpreter</span>
-        <span> | </span>
-        <a id="nav-links-about" title="About this page">About</a>
-        <span> | </span>
-        <a id="nav-links-settings" title="This page's settings">Settings</a>
-      </div>
-      <div id="nav-menus">
-        <div class="nav-menu" id="nav-menu-settings">
-          <p id="nav-menu-settings-colour">Colour scheme</p>
+	  <div id="nav-titles">
+	    <p class="nav-titles-title">CPyth</p>
+	  </div>
+	  <div id="nav-menus">
+	    <div class="dropdown">
+          <p class="dropbtn">About</p>
+          <div class="dropdown-content">
+            <a>Project</a>
+            <a href="https://github.com/ScratchOs/CPyth/tree/gh-pages" target="_blank">Code</a>
+            <a href="#">Credits</a>
+          </div>
         </div>
-        <div class="nav-menu" id="nav-menu-about">
-          <p id="nav-menu-about-help" title="How to use this">Help</p>
-          <p title="Who made this">Credits</p>
-          <p id="nav-menu-about-code" title="Github code for the site">Code</p>
-          <p title="How to write the language">Tutorial</p>
-          <p id="nav-menu-about-lang" title="About the language">Specification</p>
+		<div class="dropdown">
+          <p class="dropbtn">Help</p>
+          <div class="dropdown-content">
+            <a href="#">Tutorial</a>
+            <a href="#">Guide</a>
+          </div>
         </div>
-      </div>
+	  </div>
     </div>
     <div id="content">
 	  <div id="content-console">

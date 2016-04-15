@@ -1,49 +1,13 @@
-/*
-@docs
-@breakpoint Themes
-@title "Themes"
-@desc "Description of the variables in each theme"
-*/
-/*
-@code
-  @name $background
-  @description
-    @text "The main background colour used in CPyth"
-  @end
-*/
 $background: #464444;
-/*
-@code
-  @name $content
-  @description
-    @text "The main content colour used in CPyth"
-  @end
-*/
 $content: #262626;
-/*
-@code
-  @name $text
-  @description
-    @text "The main text colour used in CPyth"
-  @end
-*/
 $text: white;
-$menu-border: $background;
-$menu-background: $content;
-$codemirror-highlight: rgba(221, 240, 255, .2);
-$codemirror-cursor: white;
-$codemirror-comment: #A6C6FF;
-$codemirror-atom:#DE8E30;
-$codemirror-number:#CCC;
-$codemirror-property:#8F938F;
-$codemirror-attribute:#a6e22e;
-$codemirror-keyword:#AEB2F8;
-$codemirror-string:#66A968;
-$codemirror-variable:#AEB2F8;
-$codemirror-variable-2:#BEBF55;
-$codemirror-variable-3:#DE8E30;
-$codemirror-def:#757aD8;
-$codemirror-bracket:#757aD8;
-$codemirror-tag:#C1C144;
-$codemirror-link:#ae81ff;
-$codemirror-builtin:#C1C144;
+$border:2px solid black;
+$menu-border: $border;
+$menu-background: $background;
+$menu-highlight:#565555;
+$header-background:$content;
+$header-text:#ffffff;
+$border-radius:5px;
+$scroll-thumb:#bbbbbb;
+$scroll-track:$content;
+$codemirror-gutter: $content;

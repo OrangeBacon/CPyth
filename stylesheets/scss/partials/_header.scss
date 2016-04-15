@@ -1,49 +1,57 @@
 /*css for the header*/
 @import 'mixins/mixins';
 #nav {
-  background-color:$content;
-  @include size(100%,3em);
+  background-color:$header-background;
+  @include size(100%,1.5em);
   position:absolute;
+  padding:0 1em 0 1em;
 }
-#nav-links{
-  color:$text;
-  position:absolute;
-  top:1em;
-  left:1em;
-  display:inline;
+#nav-titles {
+  display:inline-block;
+  color:$header-text;
 }
-#nav-links > a {
-  cursor:pointer;
+.nav-titles-title {
+  color:$header-text;
+}
+.nav-titles-title,
+.dropbtn {
+  margin:0;
+  padding-top:0.1em;
+  padding-right:0.5em;
 }
 #nav-menus {
-  position:absolute;
+  display:inline-block;
 }
-.nav-menu {
-  background-color:$menu-background;
-  margin:0;
-  position:relative;
-  @include prefix((border-radius: 1em), webkit moz);
-  width:8em;
-  border:0.4em solid $menu-border;
-  opacity:0;
-  visibility:hidden;
-  z-index:100;
+.dropbtn {
+  color: $header-text;
+  background-color:$header-background;
+  border: none;
+  cursor: pointer;
+  outline:none;
 }
-#nav-menu-settings {
-  left:12.3em;
-  top:2.25em;
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left:-3px;
 }
-#nav-menu-about {
-  left:8.7em;
-  top:-1.3em;
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: $menu-background;
+  min-width: 160px;
+  z-index:10;
+  top:1.3em;
+  border:$menu-border;
 }
-.nav-menu > p {
-  list-style-type: none;
-  padding:0.1em 0.2em 0.1em 0.2em;
-  margin:0;
-  cursor:pointer;
+.dropdown-content a {
   color:$text;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
 }
-.nav-menu > p:hover {
-  background-color:$menu-border;
+.dropdown-content a:hover {
+  background-color: $menu-highlight;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
 }
