@@ -14,10 +14,11 @@ body {
 #content {
   width:100%;
   position:absolute;
-  top:2.5em;
+  top:1.5em;
+  padding:1em 0 0 0;
   background-color:$background;
   text-align:center;
-  height:calc(100% - 4em);
+  height:calc(100% - 1.5em);
 }
 #overlay {
   z-index:10000;
@@ -36,7 +37,7 @@ body {
 
 #content-console {
   border:$border;
-  height:100%;
+  height:calc(100% - 1em);
   width:49%;
   display:inline-block;
   @include prefix((border-radius: $border-radius), webkit moz);
@@ -46,7 +47,7 @@ body {
 }
 #content-codemirror {
   border:$border;
-  height:100%;
+  height:calc(100% - 1em);
   width:49%;
   display:inline-block;
   @include prefix((border-radius: $border-radius), webkit moz);
@@ -192,30 +193,22 @@ body {
   z-index: 5;
   overflow: hidden;
 }
-#windows,.window-container {
-  height:100%;
-  width:100%;
-  position:absolute;
-  top:0;
-  pointer-events:none;
-}
-.window {
-  height:30%;
-  width:30%;
+.window,
+.window-aspect {
+  @include size(30%);
+  top:1em;
+  left:1em;
   background-color:$content;
-  position:relative;
-  resize:both;
+  position:absolute;
   overflow:auto;
   pointer-events:all;
   @include prefix((border-radius: $border-radius), webkit moz);
   border: 2px solid black;
-  cursor:default!important;
 }
 .window-header {
   width: 100%;
   height: 1em;
   background-color: $content;
-  cursor:move!important;
 }
 .window-header-close {
   float: right;

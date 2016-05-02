@@ -3,7 +3,6 @@
 #nav {
   background-color:$header-background;
   @include size(100%,1.5em);
-  position:absolute;
   padding:0 1em 0 1em;
 }
 #nav-titles {
