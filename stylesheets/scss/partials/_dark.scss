@@ -1,7 +1,8 @@
 $background: #464444;
 $content: #262626;
 $text: white;
-$border:2px solid black;
+$border-color:black;
+$border:2px solid $border-color;
 $menu-border: $border;
 $menu-background: $background;
 $menu-highlight:#565555;

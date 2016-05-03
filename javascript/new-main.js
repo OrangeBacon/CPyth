@@ -1,7 +1,7 @@
 var cpyth = {
   vars: {
     codemirror:"",
-	windowTemplate: '<div class="window" id="<id>"><div class="window-header"><div class="window-header-close" data-id="<id>" id="window-header-close-<id>"><p class="window-header-close-text" onclick="ui.closeWindow(<id>)">X</p></div><div class="window-header-dock"><p class="window-header-dock-text">X</p></div><p class="window-header-title"><title></p></div><content></div>',
+	windowTemplate: '<div class="window" id="<id>"><div class="window-header"><div class="window-header-close" id="window-header-close"><p class="window-header-close-text" onclick="cpyth.window.closeWindow(<id>)">X</p></div><p class="window-header-title"><title></p></div><div class="window-content"><content></div><div class="window-corner"></div></div>',
 	windows: []
   },
   utils: {
@@ -104,26 +104,26 @@ var cpyth = {
     var host = document.getElementById("content-codemirror-container");
     cpyth.vars.codemirror = CodeMirror(host,{lineNumbers: true,viewportMargin:Infinity,fixedGutter:true});
 	cpyth.console.text("Welcome to the CPyth online interpreter.");
-	interact(".window").draggable({
-      restrict: {
-        restriction: '#content',
-  	    elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-      },
-	  onmove: cpyth.utils.dragMoveListener
-    }).resizable({
+	interact(".window").resizable({
       edges: { left: false, right: true, bottom: true, top: false }
-    }).on('resizemove',cpyth.utils.resizeListener);
-	interact(".window-aspect").draggable({
+    }).on('resizemove',cpyth.utils.resizeListener).allowFrom(".window-header,.window-corner").draggable({
       restrict: {
         restriction: '#content',
   	    elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
       },
 	  onmove: cpyth.utils.dragMoveListener
-    }).resizable({
+    });
+	interact(".window-aspect").resizable({
 	  preserveAspectRatio:true,
       edges: { left: false, right: true, bottom: true, top: false }
-    }).on('resizemove',cpyth.utils.resizeListener);
-	cpyth.window.window("hello","Welcome to CPyth",{resize:true,keepAspect:true,maxX:300,maxY:300,minX:100,minY:100,startX:200,startY:200});
+    }).on('resizemove',cpyth.utils.resizeListener).allowFrom(".window-header,.window-corner").draggable({
+      restrict: {
+        restriction: '#content',
+  	    elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+      },
+	  onmove: cpyth.utils.dragMoveListener
+    });
+	cpyth.window.window("Hello","<p>Welcome to CPyth</p>",{resize:true,keepAspect:true,maxX:300,maxY:300,minX:100,minY:100,startX:200,startY:200});
   }
 };
 window.onload = function(){

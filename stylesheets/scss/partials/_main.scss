@@ -203,51 +203,61 @@ body {
   overflow:auto;
   pointer-events:all;
   @include prefix((border-radius: $border-radius), webkit moz);
-  border: 2px solid black;
+  border: $border;
+  text-align:left;
 }
 .window-header {
   width: 100%;
-  height: 1em;
+  height: 1.2em;
   background-color: $content;
 }
 .window-header-close {
   float: right;
   width: 2em;
-  height: 100%;
+  height: 1.2em;
   background-color: $content;
-  border-left: 2px solid black;
-  box-sizing: border-box;
-  border-bottom: 2px solid black;
+  border-left: $border;
+  border-bottom: $border;
   text-align: center;
 }
- .window-header-close-text, .window-header-dock-text {
+ .window-header-close-text{
   margin: 0;
   top: 0;
   position: absolute;
-  text-align: center;
   width: 1.9em;
   line-height: 0.95em;
   cursor:pointer;
   color:$text;
 }
-.window-header-dock {
-  float: right;
-  width: 2em;
-  height: 100%;
-  background-color: $content;
-  border-left: 2px solid black;
-  box-sizing: border-box;
-  border-bottom: 2px solid black;
-  border-bottom-left-radius:5px;
-}
 .window-header-title {
   margin:0;
   color:$text;
-  cursor:default;
-  padding-left:1em;
-  cursor:inherit;
+  width:calc(100% - 2em);
+  border-bottom: $border;
+  height:1.2em;
+  line-height:1.2em;
+  text-align:center;
+  max-width:calc(100% - 2em);
+  cursor:move;
 }
-@media only screen and(max-width:600px) {
+.window-content {
+  height:calc(100% - 1.2em);
+  width:100%;
+  position:absolute;
+  padding-left:0.1em;
+}
+.window-corner {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 10px 10px;
+  border-color: transparent transparent $border-color transparent;
+  position:absolute;
+  bottom:0;
+  right:0;
+  cursor:nwse-resize;
+}
+@media only screen and (max-width:600px) {
   #content-console,
   #content-codemirror  {
     @include size(95%);
