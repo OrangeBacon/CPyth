@@ -1,13 +1,13 @@
 var cpyth = {
   vars: {
     codemirror:"",
-	windowTemplate: '<div class="window" id="<id>"><div class="window-header"><div class="window-header-close" id="window-header-close"><p class="window-header-close-text" onclick="cpyth.window.closeWindow(<id>)">X</p></div><p class="window-header-title"><title></p></div><div class="window-content"><content></div><div class="window-corner"></div></div>',
+	windowTemplate: '<div class="window" id="<id>"><div class="window-header"><div class="window-header-close" id="window-header-close"><p class="window-header-close-text" onclick="cpyth.window.closeWindow(<id>)">X</p></div><p class="window-header-title"><title></p></div><div class="window-content"><content></div><div class="window-corner" style="display:block"></div></div>',
 	windows: []
   },
   utils: {
-    ajax(method="GET",url="/",cont=function(){},head="") {
+    ajax(method="GET",url="/",cont=function(){}) {
       var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function(){cont(xhttp.responseText)};
+      xhttp.onreadystatechange = function(){if (xhttp.readyState == 4 && xhttp.status == 200) {cont(xhttp.responseText)}};
       xhttp.open(method, url, true);
       xhttp.send();
     },
@@ -39,26 +39,25 @@ var cpyth = {
     }
   },
   window: {
-    window(title,content,options) {
+    window(title,content,options={minX:50,minY:50,startX:200,startY:200}) {
 	  var id = (cpyth.vars.windows[cpyth.vars.windows.length-1]||0) + 1;
       var Window = cpyth.vars.windowTemplate;
 	  Window = Window.replace(/<id>/g,id).replace(/<title>/g,title).replace(/<content>/g,content);
+	  if(options.resize == false){
+	    Window = Window.replace(/block/g,"none");
+  	  };
 	  document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + Window;
 	  Window = document.getElementById(id);
-	  if(options != undefined){
-  	    if(options.keepAspect){
-	      Window.setAttribute("class","window-aspect");
-  	    };
-	    if(options.resize){
-	      Window.setAttribute("data-resize",options.resize||false);
-  	    };
-		Window.setAttribute("data-minX",options.minX||0);
-		Window.setAttribute("data-minY",options.minY||0);
-		Window.setAttribute("data-maxX",options.maxX||Infinity);
-		Window.setAttribute("data-maxY",options.maxY||Infinity);
-		Window.style.width = options.startX + "px";
-		Window.style.height = options.startY + "px";
-	  };
+  	  if(options.keepAspect){
+	    Window.setAttribute("class","window-aspect");
+  	  };
+      Window.setAttribute("data-resize",options.resize||false);
+	  Window.setAttribute("data-minX",options.minX||0);
+	  Window.setAttribute("data-minY",options.minY||0);
+	  Window.setAttribute("data-maxX",options.maxX||Infinity);
+	  Window.setAttribute("data-maxY",options.maxY||Infinity);
+	  Window.style.width = (options.startX + "px")||"";
+	  Window.style.height = (options.startY + "px")||"";
 	  cpyth.vars.windows.push(id);
 	  return id;
     },
@@ -68,7 +67,7 @@ var cpyth = {
 	  if (index > -1) {
         cpyth.vars.windows.splice(index, 1);
       };
-    }
+    },
   },
   console: {
     error(message){
@@ -100,6 +99,15 @@ var cpyth = {
       document.getElementById("content-console-output-main").appendChild(node);
 	}
   },
+  ui: {
+	alternateTheme(e){
+	  if(e.target.checked){
+	    document.getElementById("theme").setAttribute('href','stylesheets/dark-main.css');
+	  } else {
+	    document.getElementById("theme").setAttribute('href','stylesheets/light-main.css');
+	  }
+	}
+  },
   init() {
     var host = document.getElementById("content-codemirror-container");
     cpyth.vars.codemirror = CodeMirror(host,{lineNumbers: true,viewportMargin:Infinity,fixedGutter:true});
@@ -116,14 +124,15 @@ var cpyth = {
 	interact(".window-aspect").resizable({
 	  preserveAspectRatio:true,
       edges: { left: false, right: true, bottom: true, top: false }
-    }).on('resizemove',cpyth.utils.resizeListener).allowFrom(".window-header,.window-corner").draggable({
+    }).on('resizemove',cpyth.utils.resizeListener).allowFrom(".window-header-title,.window-corner").draggable({
       restrict: {
         restriction: '#content',
   	    elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
       },
 	  onmove: cpyth.utils.dragMoveListener
     });
-	cpyth.window.window("Hello","<p>Welcome to CPyth</p>",{resize:true,keepAspect:true,maxX:300,maxY:300,minX:100,minY:100,startX:200,startY:200});
+	//cpyth.window.window("Hello","<p>Welcome to CPyth</p>",{resize:true,keepAspect:true,maxX:300,maxY:300,minX:100,minY:100,startX:200,startY:200});
+	document.getElementById("colour").addEventListener("change",function(e){cpyth.ui.alternateTheme(e)},true);
   }
 };
 window.onload = function(){
