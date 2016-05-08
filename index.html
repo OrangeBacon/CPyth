@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<link href='stylesheets/dark-main.css' rel='stylesheet' type='text/css' id="theme">
+	<link href='stylesheets/light-main.css' rel='stylesheet' type='text/css' id="theme">
     <script src="javascript/main.js"></script>
     <script src="javascript/lib.js"></script>
 	<title>CPyth Interpreter</title>
@@ -10,26 +10,33 @@
   </head>
   <body>
     <div id="nav">
-      <div id="nav-links">
-        <span title="CPyth Interpreter">CPyth Interpreter</span>
-        <span> | </span>
-        <a id="nav-links-about" title="About this page">About</a>
-        <span> | </span>
-        <a id="nav-links-settings" title="This page's settings">Settings</a>
-      </div>
-      <div id="nav-menus">
-        <div class="nav-menu" id="nav-menu-settings">
-          <p id="nav-menu-settings-colour">Colour scheme</p>
-          <p id="nav-menu-settings-hide">Hide Footer</p>
+	  <div id="nav-titles">
+	    <p class="nav-titles-title">CPyth</p>
+	  </div>
+	    <div class="dropdown">
+          <span>About</span>
+          <div class="dropdown-content">
+            <a>Project</a>
+            <a href="https://github.com/ScratchOs/CPyth/tree/gh-pages" target="_blank">Code</a>
+            <a href="#">Credits</a>
+          </div>
         </div>
-        <div class="nav-menu" id="nav-menu-about">
-          <p id="nav-menu-about-help" title="How to use this">Help</p>
-          <p title="Who made this">Credits</p>
-          <p id="nav-menu-about-code" title="Github code for the site">Code</p>
-          <p title="How to write the language">Tutorial</p>
-          <p id="nav-menu-about-lang" title="About the language">Specification</p>
+		<div class="dropdown">
+          <span>Help</span>
+          <div class="dropdown-content">
+            <a href="#">Tutorial</a>
+            <a href="#">Guide</a>
+          </div>
         </div>
-      </div>
+		<div class="dropdown">
+          <span>Settings</span>
+          <div class="dropdown-content">
+		    <div id="colour-container">
+			  <input type="checkbox" id="colour">
+			  <label for="colour">Alternate theme</label>
+			</div>
+          </div>
+        </div>
     </div>
     <div id="content">
 	  <div id="content-console">
@@ -44,25 +51,10 @@
 		</div>
 	  </div>
 	  <div id="content-codemirror">
+	    <div id="content-codemirror-tabs"></div>
 	    <div id="content-codemirror-container"></div>
+		<div id="content-codemirror-actions"></div>
 	  </div>
 	</div>
-    <div id="foot">
-      <p id="foot-expand">Expand Footer</p>
-	  <div id="foot-links">
-		<a>Privacy Policy</a>
-		<span> | </span>
-		<a>Contact</a>
-		<span> | </span>
-		<a>Terms Of Service</a>
-		<span> | </span>
-		<a>DMCA</a>
-	  </div>
-	</div>
-	<div id="overlay">
-	  <h1 id="overlay-title">1</h1>
-	  <p id="overlay-text">2</p>
-	</div>
-	<div id="windows"></div>
-  </body>
+	</body>
 </html>

@@ -1,3 +1,7 @@
+* {
+  box-sizing:border-box;
+  color:$text;
+}
 html,
 body {
   margin:0;
@@ -10,10 +14,12 @@ body {
 #content {
   width:100%;
   position:absolute;
-  top:3em;
+  top:1.5em;
+  padding:1em 0 0 0;
   background-color:$background;
-  opacity:0;
-  visibility:hidden;
+  text-align:center;
+  height:calc(100% - 1.5em);
+  z-index:-1;
 }
 #overlay {
   z-index:10000;
@@ -29,43 +35,39 @@ body {
   text-align:center;
   color:$text;
 }
-#content {
-  text-align:center;
-}
+
 #content-console {
-  border:2px solid black;
-  height:90%;
+  border:$border;
+  height:calc(100% - 1em);
   width:49%;
   display:inline-block;
-  @include prefix((border-radius: 5px), webkit moz);
-  margin-top:2%;
+  @include prefix((border-radius: $border-radius), webkit moz);
   text-align:start;
   background-color:$content;
   position:relative;
 }
 #content-codemirror {
-  border:2px solid black;
-  height:90%;
+  border:$border;
+  height:calc(100% - 1em);
   width:49%;
   display:inline-block;
-  @include prefix((border-radius: 5px), webkit moz);
-  margin-top:2%;
+  @include prefix((border-radius: $border-radius), webkit moz);
+  background-color:$content;
   text-align:start;
 }
 #content-console-input {
-  border-top: 2px solid black;
+  border-top: $border;
   background-color: $background;
   height: 2em;
   width: 100%;
   position: absolute;
   bottom: 0;
-  @include prefix((border-radius: 0 0 1px 2px),webkit moz);
+  @include prefix((border-radius: 0 0 $border-radius $border-radius),webkit moz);
 }
 #content-console-input-form-text {
   padding: 0;
   outline: 0;
-  width: 90%;
-  height: 100%;
+  @include size(100%);
   background-color: $background;
   border: 0;
   color: $text;
@@ -83,7 +85,7 @@ body {
   width: 100%;
   position: absolute;
   top:0;
-  @include prefix((border-radius: 0 0 2px 2px), webkit moz);
+  @include prefix((border-radius: 0 0 $border-radius $border-radius), webkit moz);
   overflow-y:scroll;
   word-wrap:break-word;
 }
@@ -123,75 +125,140 @@ body {
 }
 #content-codemirror-container {
   position:absolute;
-  width:100%;
-  height:100%;
+  @include size(100%,calc(100% - 4em));
+  top:2em;
+  z-index:0;
 }
 .CodeMirror {
   height:100%;
 }
-#windows,.window-container {
-  height:100%;
-  width:100%;
+#content-codemirror-actions {
+  @include size(100%,2em);
+  position:absolute;
+  bottom:0;
+  border-top:$border;
+  background-color:$background;
+}
+#content-codemirror-tabs {
+  @include size(100%,2em);
   position:absolute;
   top:0;
-  pointer-events:none;
+  border-bottom:$border;
+  background-color:$background;
+  overflow-x:scroll;
 }
-.window {
-  height:30%;
-  width:30%;
+#content-codemirror-tabs::-webkit-scrollbar-track {
+  background: $background;
+}
+.tab {
+  padding: 0.5em;
+  display: inline;
+  width: auto;
+}
+.tab > div {
+  margin: 0;
+  height: 1.5em;
+  line-height: 1em;
+  display: inline-block;
+  background-color: #262626;
+  position: absolute;
+  top: 0.5em;
+  width: 5em;
+  text-align: center;
+  margin-left: -0.55em;
+  z-index: 5;
+  max-width: 5em;
+  border-top: $border;
+}
+.tab:before,
+.tab:after {
+  content: "";
+  height: 1.8em;
+  width: 1em;
+  display: inline-block;
+  position: relative;
+  transform: rotate(30deg);
+  background-color: $content;
+  z-index: 0;
+  margin-top: 0.65em;
+  border-left: 2px solid black;
+}
+.tab:after {
+  transform: rotate(-30deg);
+  margin-left: 3.9em;
+  border-left: none;
+  border-right: 2px solid black;
+}
+.tab>div>p {
+  margin: 0;
+  z-index: 5;
+  overflow: hidden;
+}
+.window,
+.window-aspect {
+  @include size(30%);
+  top:1em;
+  left:1em;
   background-color:$content;
-  position:relative;
-  resize:both;
+  position:absolute;
   overflow:auto;
   pointer-events:all;
-  @include prefix((border-radius: 5px), webkit moz);
-  border: 2px solid black;
-  cursor:default!important;
+  @include prefix((border-radius: $border-radius), webkit moz);
+  border: $border;
+  text-align:left;
 }
 .window-header {
   width: 100%;
-  height: 1em;
+  height: 1.2em;
   background-color: $content;
-  cursor:move!important;
 }
 .window-header-close {
   float: right;
   width: 2em;
-  height: 100%;
+  height: 1.2em;
   background-color: $content;
-  border-left: 2px solid black;
-  box-sizing: border-box;
-  border-bottom: 2px solid black;
+  border-left: $border;
+  border-bottom: $border;
   text-align: center;
 }
- .window-header-close-text, .window-header-dock-text {
+ .window-header-close-text{
   margin: 0;
   top: 0;
   position: absolute;
-  text-align: center;
   width: 1.9em;
   line-height: 0.95em;
   cursor:pointer;
   color:$text;
 }
-.window-header-dock {
-  float: right;
-  width: 2em;
-  height: 100%;
-  background-color: $content;
-  border-left: 2px solid black;
-  box-sizing: border-box;
-  border-bottom: 2px solid black;
-  border-bottom-left-radius:5px;
-}
 .window-header-title {
   margin:0;
   color:$text;
-  cursor:default;
-  padding-left:1em;
-  cursor:inherit;
+  width:calc(100% - 2em);
+  border-bottom: $border;
+  height:1.2em;
+  line-height:1.2em;
+  text-align:center;
+  max-width:calc(100% - 2em);
+  cursor:move;
 }
-@media only screen and(max-width:600px) {
+.window-content {
+  height:calc(100% - 1.2em);
+  width:100%;
+  position:absolute;
+  padding-left:0.1em;
+}
+.window-corner {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 10px 10px;
+  border-color: transparent transparent $border-color transparent;
+  position:absolute;
+  bottom:0;
+  right:0;
+  cursor:nwse-resize;
+}
+@media only screen and (max-width:600px) {
   #content-console,
   #content-codemirror  {
     @include size(95%);
