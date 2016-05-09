@@ -145,54 +145,27 @@ body {
   top:0;
   border-bottom:$border;
   background-color:$background;
+  padding-left: 0.2em;
+  white-space:nowrap;
   overflow-x:scroll;
+  overflow-y:hidden;
 }
 #content-codemirror-tabs::-webkit-scrollbar-track {
   background: $background;
 }
+.tab > p {
+  margin: 0;
+}
 .tab {
-  padding: 0.5em;
-  display: inline;
-  width: auto;
-}
-.tab > div {
-  margin: 0;
-  height: 1.5em;
-  line-height: 1em;
   display: inline-block;
-  background-color: #262626;
-  position: absolute;
-  top: 0.5em;
-  width: 5em;
-  text-align: center;
-  margin-left: -0.55em;
-  z-index: 5;
-  max-width: 5em;
-  border-top: $border;
+  padding: 0 0.5em 0 0.5em;
+  border:$border;
+  margin:0.15em 0.2em 0 0;
+  height:calc(1.8em - 8px);
+  cursor:pointer;
 }
-.tab:before,
-.tab:after {
-  content: "";
-  height: 1.8em;
-  width: 1em;
-  display: inline-block;
-  position: relative;
-  transform: rotate(30deg);
-  background-color: $content;
-  z-index: 0;
-  margin-top: 0.65em;
-  border-left: 2px solid black;
-}
-.tab:after {
-  transform: rotate(-30deg);
-  margin-left: 3.9em;
-  border-left: none;
-  border-right: 2px solid black;
-}
-.tab>div>p {
-  margin: 0;
-  z-index: 5;
-  overflow: hidden;
+.tab:hover {
+  background-color:$menu-background;
 }
 .window,
 .window-aspect {
