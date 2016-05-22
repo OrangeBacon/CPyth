@@ -132,6 +132,28 @@ var cpyth = {
       } else {
 	    document.getElementById("file-browser").setAttribute('hidden','');
 	  }
+	},
+	showFolder(){
+	  document.getElementById("foldercreate").removeAttribute('hidden');
+	  document.getElementById("filecreate").setAttribute('hidden','');
+	},
+	showFile(){
+	  document.getElementById("filecreate").removeAttribute('hidden');
+	  document.getElementById("foldercreate").setAttribute('hidden','');
+	},
+	createFolder(){
+	  document.getElementById("foldercreate").setAttribute('hidden','');
+	  var name = document.getElementById("foldername").value;
+	  document.getElementById("filename").value = "";
+	  cpyth.files.folder.create(cpyth.vars.path,name);
+	},
+	createFile(){
+	  document.getElementById("filecreate").setAttribute('hidden','');
+	  var name = document.getElementById("filename").value;
+	  var namef = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
+	  var ext = name.match(/([^\.]+$)/)[0];
+	  document.getElementById("filename").value = "";
+	  cpyth.files.file.create(cpyth.vars.path,namef,ext);
 	}
   },
   files: {
@@ -188,8 +210,12 @@ var cpyth = {
 	  document.getElementById("path").children[0].innerHTML = "Path: " + path + file;
 	  if(file!=""){
 	    cpyth.vars.codemirrorPreview.setValue(cpyth.files.file.get(path,file));
+		document.getElementById("controls-files").removeAttribute('hidden');
+		document.getElementById("controls-folders").setAttribute('hidden','');
 	  } else {
 	    cpyth.vars.codemirrorPreview.setValue("");
+		document.getElementById("controls-folders").removeAttribute('hidden');
+		document.getElementById("controls-files").setAttribute('hidden','');
 	  }
 	},
 	save(){
@@ -209,7 +235,7 @@ var cpyth = {
 		var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
 		if(path!=""){
-		  path = path.split(/[\/]/);
+		  path = path.split(/[\/]/).filter(Boolean);
 		  for(var i=0;i<path.length;i++){
 		    if(node.content[path[i]]){
 		      node = node.content[path[i]];
@@ -218,14 +244,15 @@ var cpyth = {
 		    }
 		  };
 		}
-		node.content[namef] = {type:ext,name:name+"."+ext,content:""}
+		node.content[namef] = {type:ext,name:name+"."+ext,content:""};
+		cpyth.files.display();
 	  },
 	  save(path,name,content){
-	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
+	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"")
 	    var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
 		if(path!=""){
-		  path = path.split(/[\/]/);
+		  path = path.split(/[\/]/).filter(Boolean);
 		  for(var i=0;i<path.length;i++){
 		    if(node.content[path[i]]){
 		      node = node.content[path[i]];
@@ -237,61 +264,11 @@ var cpyth = {
 		node.content[namef].content = content;
 	  },
 	  remove(path,name){
+		name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
 	    var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
 		if(path!=""){
-		  path = path.split(/[\/]/);
-		  for(var i=0;i<path.length;i++){
-		    if(node.content[path[i]]){
-		      node = node.content[path[i]];
-		    } else {
-		      throw "path error";
-		    }
-		  };
-		}
-		delete node.content[namef]
-	  },
-	  get(path,name){
-	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
-	    var namef = name.replace(/[\.\/]/g,"_");
-		var node = cpyth.vars.files;
-		if(path!=""){
-		  path = path.split(/[\/]/);
-		  for(var i=0;i<path.length;i++){
-		    if(path[i]!=""){
-		      console.log(path[i])
-		      if(node.content[path[i]]){
-		        node = node.content[path[i]];
-		      } else {
-		        throw "path error";
-		      }
-		    }
-          }			
-		}
-		return node.content[namef].content;
-	  }
-	},
-	folder: {
-	  create(path,name){
-	    var namef = name.replace(/[\.\/]/g,"_");
-		var node = cpyth.vars.files;
-		if(path!=""){
-		  path = path.split(/[\/]/);
-		  for(var i=0;i<path.length;i++){
-		    if(node.content[path[i]]){
-		      node = node.content[path[i]];
-		    } else {
-		      throw "path error";
-		    }
-		  };
-		}
-		node.content[namef] = {type:"folder",name:name,content:{}}
-	  },
-	  remove(path,name){
-	    var namef = name.replace(/[\.\/]/g,"_");
-		var node = cpyth.vars.files;
-		if(path!=""){
-		  path = path.split(/[\/]/);
+		  path = path.split(/[\/]/).filter(Boolean);
 		  for(var i=0;i<path.length;i++){
 		    if(node.content[path[i]]){
 		      node = node.content[path[i]];
@@ -301,6 +278,58 @@ var cpyth = {
 		  };
 		}
 		delete node.content[namef];
+		cpyth.files.display();
+	  },
+	  get(path,name){
+	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
+	    var namef = name.replace(/[\.\/]/g,"_");
+		var node = cpyth.vars.files;
+		if(path!=""){
+		  path = path.split(/[\/]/).filter(Boolean);
+		  for(var i=0;i<path.length;i++){
+		    if(node.content[path[i]]){
+		      node = node.content[path[i]];
+		    } else {
+		      throw "path error";
+		    }
+		  }		
+		}
+		return node.content[namef].content;
+	  }
+	},
+	folder: {
+	  create(path,name){
+	    var namef = name.replace(/[\.\/]/g,"_");
+		var node = cpyth.vars.files;
+		if(path!=""){
+		  path = path.split(/[\/]/).filter(Boolean);
+		  for(var i=0;i<path.length;i++){
+		    if(node.content[path[i]]){
+		      node = node.content[path[i]];
+		    } else {
+		      throw "path error";
+		    }
+		  };
+		}
+		node.content[namef] = {type:"folder",name:name,content:{}};
+		cpyth.files.display();
+	  },
+	  remove(path){
+		var node = cpyth.vars.files;
+		path = path.split(/[\/]/).filter(Boolean);
+		if(path!="" && (path.length-1)>0){
+		  for(var i=0;i<(path.length-1);i++){
+		    if(node.content[path[i]]){
+		      node = node.content[path[i]];
+		    } else {
+		      throw "path error";
+		    }
+		  };
+		  delete node.content[path[i]];
+		} else {
+		  delete node.content[path[0]];
+		}
+		cpyth.files.display();
 	  }
 	}
   },
@@ -332,6 +361,12 @@ var cpyth = {
 	document.getElementById("colour").addEventListener("change",function(e){cpyth.ui.alternateTheme(e)},true);
 	document.getElementById("fileopen").addEventListener("click",function(e){cpyth.ui.fileBrowser(e)},true);
 	document.getElementById("fileclose").addEventListener("click",function(e){cpyth.ui.fileBrowser(e)},true);
+	document.getElementById("folderdelete").addEventListener("click",function(){cpyth.files.folder.remove(cpyth.vars.path)},true);
+	document.getElementById("filenew").addEventListener("click",cpyth.ui.showFile);
+	document.getElementById("foldernew").addEventListener("click",cpyth.ui.showFolder);
+	document.getElementById("createfolder").addEventListener("click",cpyth.ui.createFolder);
+	document.getElementById("createfile").addEventListener("click",cpyth.ui.createFile);
+	document.getElementById("filedelete").addEventListener("click",function(){cpyth.files.file.remove(cpyth.vars.path,cpyth.vars.file)},true);
 	cpyth.files.init();
 	setInterval(cpyth.utils.documentResize,50);
   }
