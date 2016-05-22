@@ -35,16 +35,6 @@
 .dropdown > span {
   color: #ffffff; }
 
-#overlay-colour-title {
-  color: black;
-  padding-left: 1em; }
-
-#overlay-colour {
-  width: 100%; }
-
-li {
-  cursor: pointer; }
-
 /* BASICS */
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
@@ -654,6 +644,23 @@ body {
   border-top: 1px solid #999999;
   background-color: #ececec; }
 
+#content-codemirror-actions > button {
+  height: 100%;
+  background-color: #ffffff;
+  border: 0;
+  border-right: 1px solid #999999;
+  outline: 0;
+  font-family: 'Roboto', sans-serif;
+  color: black;
+  outline: 0;
+  cursor: pointer; }
+
+#content-codemirror-actions > button:hover {
+  background-color: #eeeeee; }
+
+#content-codemirror-actions > button:active {
+  font-weight: bold; }
+
 #content-codemirror-tabs {
   width: 100%;
   height: 2em;
@@ -662,22 +669,20 @@ body {
   border-bottom: 1px solid #999999;
   background-color: #ececec;
   padding-left: 0.2em;
-  white-space: nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden; }
-
-#content-codemirror-tabs::-webkit-scrollbar-track {
-  background: #ececec; }
+  white-space: nowrap; }
 
 .tab > p {
-  margin: 0; }
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 .tab {
   display: inline-block;
   padding: 0 0.5em 0 0.5em;
   border: 1px solid #999999;
-  margin: 0.15em 0.2em 0 0;
-  height: calc(1.8em - 8px);
+  margin: 0.2em 0.2em 0 0;
+  height: 1.8em;
   cursor: pointer; }
 
 .tab:hover {
@@ -749,6 +754,91 @@ body {
   bottom: 0;
   right: 0;
   cursor: nwse-resize; }
+
+#file-browser {
+  width: 80%;
+  position: absolute;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+  z-index: 100;
+  background-color: #ececec;
+  border: 1px solid #999999; }
+
+#treeview {
+  width: 50%;
+  height: calc(100% - 2em);
+  border-right: 1px solid #999999;
+  float: left;
+  overflow-y: scroll; }
+  #treeview input[type=checkbox] {
+    display: none; }
+  #treeview input[type=checkbox] + label:before {
+    content: '\25ba';
+    cursor: pointer; }
+  #treeview input[type=checkbox]:checked + label:before {
+    content: '\25bc';
+    cursor: pointer; }
+  #treeview input[type=checkbox]:not(:checked) ~ ul {
+    display: none; }
+  #treeview li {
+    list-style-type: none;
+    cursor: pointer; }
+  #treeview li:not([data-type]):before {
+    content: '\1f4c2';
+    padding-right: 0.5em;
+    cursor: default; }
+  #treeview li[data-type]:before {
+    content: '\1f5ce';
+    padding-right: 0.5em;
+    cursor: default; }
+  #treeview li[data-type=empty] {
+    color: red; }
+  #treeview li[data-type=empty]:before {
+    content: '\1F6AB';
+    padding-right: 0.5em;
+    cursor: default; }
+  #treeview label {
+    cursor: pointer; }
+
+#treeview::-webkit-scrollbar-track {
+  background: #ececec; }
+
+#preview {
+  width: 50%;
+  height: calc(100% - 2em);
+  position: absolute;
+  right: 0; }
+
+#file-browser-header {
+  width: 100%;
+  height: 2em;
+  border-bottom: 1px solid #999999; }
+
+#file-browser-header > p {
+  margin: 0;
+  margin-left: 1em;
+  height: 2em;
+  display: inline-block;
+  line-height: 2em; }
+
+#fileclose {
+  position: absolute;
+  right: 0;
+  display: inline-block;
+  border-left: 1px solid #999999; }
+
+#fileclose > p {
+  height: 2em;
+  line-height: 2em;
+  margin: 0;
+  padding: 0 0.5em 0 0.5em;
+  cursor: pointer;
+  background-color: #ffffff;
+  border-bottom: 1px solid #999999; }
+
+#fileclose > p:hover {
+  background-color: #eeeeee; }
 
 @media only screen and (max-width: 600px) {
   #content-console,

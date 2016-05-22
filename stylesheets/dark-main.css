@@ -35,16 +35,6 @@
 .dropdown > span {
   color: #ffffff; }
 
-#overlay-colour-title {
-  color: white;
-  padding-left: 1em; }
-
-#overlay-colour {
-  width: 100%; }
-
-li {
-  cursor: pointer; }
-
 /* BASICS */
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
@@ -654,6 +644,23 @@ body {
   border-top: 2px solid black;
   background-color: #464444; }
 
+#content-codemirror-actions > button {
+  height: 100%;
+  background-color: #262626;
+  border: 0;
+  border-right: 2px solid black;
+  outline: 0;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  outline: 0;
+  cursor: pointer; }
+
+#content-codemirror-actions > button:hover {
+  background-color: #565555; }
+
+#content-codemirror-actions > button:active {
+  font-weight: bold; }
+
 #content-codemirror-tabs {
   width: 100%;
   height: 2em;
@@ -662,22 +669,20 @@ body {
   border-bottom: 2px solid black;
   background-color: #464444;
   padding-left: 0.2em;
-  white-space: nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden; }
-
-#content-codemirror-tabs::-webkit-scrollbar-track {
-  background: #464444; }
+  white-space: nowrap; }
 
 .tab > p {
-  margin: 0; }
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 .tab {
   display: inline-block;
   padding: 0 0.5em 0 0.5em;
   border: 2px solid black;
-  margin: 0.15em 0.2em 0 0;
-  height: calc(1.8em - 8px);
+  margin: 0.2em 0.2em 0 0;
+  height: 1.8em;
   cursor: pointer; }
 
 .tab:hover {
@@ -749,6 +754,91 @@ body {
   bottom: 0;
   right: 0;
   cursor: nwse-resize; }
+
+#file-browser {
+  width: 80%;
+  position: absolute;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+  z-index: 100;
+  background-color: #464444;
+  border: 2px solid black; }
+
+#treeview {
+  width: 50%;
+  height: calc(100% - 2em);
+  border-right: 2px solid black;
+  float: left;
+  overflow-y: scroll; }
+  #treeview input[type=checkbox] {
+    display: none; }
+  #treeview input[type=checkbox] + label:before {
+    content: '\25ba';
+    cursor: pointer; }
+  #treeview input[type=checkbox]:checked + label:before {
+    content: '\25bc';
+    cursor: pointer; }
+  #treeview input[type=checkbox]:not(:checked) ~ ul {
+    display: none; }
+  #treeview li {
+    list-style-type: none;
+    cursor: pointer; }
+  #treeview li:not([data-type]):before {
+    content: '\1f4c2';
+    padding-right: 0.5em;
+    cursor: default; }
+  #treeview li[data-type]:before {
+    content: '\1f5ce';
+    padding-right: 0.5em;
+    cursor: default; }
+  #treeview li[data-type=empty] {
+    color: red; }
+  #treeview li[data-type=empty]:before {
+    content: '\1F6AB';
+    padding-right: 0.5em;
+    cursor: default; }
+  #treeview label {
+    cursor: pointer; }
+
+#treeview::-webkit-scrollbar-track {
+  background: #464444; }
+
+#preview {
+  width: 50%;
+  height: calc(100% - 2em);
+  position: absolute;
+  right: 0; }
+
+#file-browser-header {
+  width: 100%;
+  height: 2em;
+  border-bottom: 2px solid black; }
+
+#file-browser-header > p {
+  margin: 0;
+  margin-left: 1em;
+  height: 2em;
+  display: inline-block;
+  line-height: 2em; }
+
+#fileclose {
+  position: absolute;
+  right: 0;
+  display: inline-block;
+  border-left: 2px solid black; }
+
+#fileclose > p {
+  height: 2em;
+  line-height: 2em;
+  margin: 0;
+  padding: 0 0.5em 0 0.5em;
+  cursor: pointer;
+  background-color: #262626;
+  border-bottom: 2px solid black; }
+
+#fileclose > p:hover {
+  background-color: #565555; }
 
 @media only screen and (max-width: 600px) {
   #content-console,
