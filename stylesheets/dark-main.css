@@ -767,7 +767,9 @@ body {
 
 #treeview {
   width: 50%;
-  height: calc(100% - 2em);
+  height: calc(100% - 6em);
+  position: absolute;
+  top: 4em;
   border-right: 2px solid black;
   float: left;
   overflow-y: scroll; }
@@ -803,6 +805,30 @@ body {
 
 #treeview::-webkit-scrollbar-track {
   background: #464444; }
+
+#path {
+  width: 50%;
+  position: absolute;
+  top: 2em;
+  height: 2em;
+  border: 2px solid black;
+  border-left: 0;
+  border-top: 0; }
+
+#path p {
+  margin: 0;
+  height: 2em;
+  line-height: 2em;
+  padding-left: 1em; }
+
+#controls {
+  width: 50%;
+  position: absolute;
+  bottom: 0em;
+  height: 2em;
+  border: 2px solid black;
+  border-left: 0;
+  border-bottom: 0; }
 
 #preview {
   width: 50%;

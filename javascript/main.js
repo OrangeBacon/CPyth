@@ -6,7 +6,9 @@ var cpyth = {
 	windowTemplate: '<div class="window" id="<id>"><div class="window-header"><div class="window-header-close" id="window-header-close"><p class="window-header-close-text" onclick="cpyth.window.closeWindow(<id>)">X</p></div><p class="window-header-title"><title></p></div><div class="window-content"><content></div><div class="window-corner" style="display:block"></div></div>',
 	windows: [],
 	files:{type:"folder",name:"root",content:{}},
-	id:0
+	id:0,
+	path:"",
+	file:""
   },
   utils: {
     ajax(method="GET",url="/",cont=function(){}) {
@@ -141,9 +143,10 @@ var cpyth = {
 	  cpyth.files.file.create("","main","cpyth");
 	  cpyth.files.file.create("test","test","cpyth");
 	  cpyth.files.file.create("_lib/vendor","jquery.min","js");
+	  cpyth.files.file.save("_lib/vendor","jquery.min.js","This is JQuery!");
 	  cpyth.files.display();
 	},
-	render(node){
+	render(node,path){
 	  node = node.content;
 	  var keys = Object.keys(node)
 	  var ret = "";
@@ -152,19 +155,42 @@ var cpyth = {
 	      var test = node[keys[i]];
 	      if(typeof test.content == "object"){
 		    var id=cpyth.utils.id();
-		    ret+="<li class='treeview-folder'><input type='checkbox' id='f" + id +"'><label for='f" + id + "'>" + test.name + "</label><ul class='treeview-content'>" + cpyth.files.render(test) + "</ul></li>"
+			var fpath = path + test.name + "/"
+		    ret+="<li class='treeview-folder' data-path='" + fpath + "'><input type='checkbox' id='f" + id +"'><label for='f" + id + "'>" + test.name + "</label><ul class='treeview-content'>" + cpyth.files.render(test,fpath) + "</ul></li>"
 		  } else {
-		    ret+="<li class='treeview-file' data-type='" + test.type + "'>" + test.name + "</li>"
+		    ret+="<li class='treeview-file' data-type='" + test.type + "' data-path='" + path +"' data-file='" + test.name + "'>" + test.name + "</li>"
 		  }
 	    }
 	  } else {
-	    ret = "<li data-type='empty'>empty</li>";
+	    ret = "<li data-type='empty' data-path='" + path + "'>empty</li>";
 	  }
 	  return ret
 	},
 	display(){
 	  var node = cpyth.vars.files
-	  document.getElementById("treeview").innerHTML = "<ul class='treeview-content'>" + cpyth.files.render(node) + "</ul>";
+	  document.getElementById("treeview").innerHTML = "<ul class='treeview-content'>" + cpyth.files.render(node,"") + "</ul>";
+	  var elem = document.querySelectorAll(".treeview-content > li");
+	  for(var i = 0;i<elem.length;i++){
+	    elem[i].addEventListener("click",function(e){cpyth.files.pathSet(e)},true);
+	  }
+	},
+	pathSet(e){
+	  e.stopPropagation();
+	  var path = e.target.getAttribute("data-path");
+	  var file = "";
+	  if(path == null){
+	    path = e.target.parentNode.getAttribute("data-path");
+	  } else if(e.target.getAttribute("data-file")!= null){
+	    file = e.target.getAttribute("data-file");
+	  }
+	  cpyth.vars.path = path;
+	  cpyth.vars.file = file;
+	  document.getElementById("path").children[0].innerHTML = "Path: " + path + file;
+	  if(file!=""){
+	    cpyth.vars.codemirrorPreview.setValue(cpyth.files.file.get(path,file));
+	  } else {
+	    cpyth.vars.codemirrorPreview.setValue("");
+	  }
 	},
 	save(){
 	
@@ -180,10 +206,10 @@ var cpyth = {
 	
 	  },
 	  create(path,name,ext){
-		var namef = name.replace(/\.\//g,"_");
+		var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
 		if(path!=""){
-		  path = path.split(/\//);
+		  path = path.split(/[\/]/);
 		  for(var i=0;i<path.length;i++){
 		    if(node.content[path[i]]){
 		      node = node.content[path[i]];
@@ -194,11 +220,12 @@ var cpyth = {
 		}
 		node.content[namef] = {type:ext,name:name+"."+ext,content:""}
 	  },
-	  save(path,content){
-	    var namef = name.replace(/\.\//g,"_");
+	  save(path,name,content){
+	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
+	    var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
 		if(path!=""){
-		  path = path.split(/\//);
+		  path = path.split(/[\/]/);
 		  for(var i=0;i<path.length;i++){
 		    if(node.content[path[i]]){
 		      node = node.content[path[i]];
@@ -210,10 +237,10 @@ var cpyth = {
 		node.content[namef].content = content;
 	  },
 	  remove(path,name){
-	    var namef = name.replace(/\.\//g,"_");
+	    var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
 		if(path!=""){
-		  path = path.split(/\//);
+		  path = path.split(/[\/]/);
 		  for(var i=0;i<path.length;i++){
 		    if(node.content[path[i]]){
 		      node = node.content[path[i]];
@@ -223,14 +250,33 @@ var cpyth = {
 		  };
 		}
 		delete node.content[namef]
+	  },
+	  get(path,name){
+	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
+	    var namef = name.replace(/[\.\/]/g,"_");
+		var node = cpyth.vars.files;
+		if(path!=""){
+		  path = path.split(/[\/]/);
+		  for(var i=0;i<path.length;i++){
+		    if(path[i]!=""){
+		      console.log(path[i])
+		      if(node.content[path[i]]){
+		        node = node.content[path[i]];
+		      } else {
+		        throw "path error";
+		      }
+		    }
+          }			
+		}
+		return node.content[namef].content;
 	  }
 	},
 	folder: {
 	  create(path,name){
-	    var namef = name.replace(/\.\//g,"_");
+	    var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
 		if(path!=""){
-		  path = path.split(/\//);
+		  path = path.split(/[\/]/);
 		  for(var i=0;i<path.length;i++){
 		    if(node.content[path[i]]){
 		      node = node.content[path[i]];
@@ -242,10 +288,10 @@ var cpyth = {
 		node.content[namef] = {type:"folder",name:name,content:{}}
 	  },
 	  remove(path,name){
-	    var namef = name.replace(/\.\//g,"_");
+	    var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
 		if(path!=""){
-		  path = path.split(/\//);
+		  path = path.split(/[\/]/);
 		  for(var i=0;i<path.length;i++){
 		    if(node.content[path[i]]){
 		      node = node.content[path[i]];
@@ -262,7 +308,7 @@ var cpyth = {
     var host = document.getElementById("content-codemirror-container");
     cpyth.vars.codemirror = CodeMirror(host,{lineNumbers: true,viewportMargin:Infinity});
 	host = document.getElementById("preview");
-	cpyth.vars.codemirrorPreview = CodeMirror(host,{lineNumbers: true,viewportMargin:Infinity,readOnly:false});
+	cpyth.vars.codemirrorPreview = CodeMirror(host,{lineNumbers: true,viewportMargin:Infinity,readOnly:"nocursor"});
 	cpyth.console.text("Welcome to the CPyth online interpreter.");
 	interact(".window").resizable({
       edges: { left: false, right: true, bottom: true, top: false }
