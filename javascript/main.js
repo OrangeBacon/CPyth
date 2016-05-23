@@ -8,7 +8,8 @@ var cpyth = {
 	files:{type:"folder",name:"root",content:{}},
 	id:0,
 	path:"",
-	file:""
+	file:"",
+	openTab:""
   },
   utils: {
     ajax(method="GET",url="/",cont=function(){}) {
@@ -154,6 +155,9 @@ var cpyth = {
 	  var ext = name.match(/([^\.]+$)/)[0];
 	  document.getElementById("filename").value = "";
 	  cpyth.files.file.create(cpyth.vars.path,namef,ext);
+	},
+	tabChange(e){
+	  cpyth.files.file.change(e.target.getAttribute("data-id"));
 	}
   },
   files: {
@@ -167,10 +171,11 @@ var cpyth = {
 	  cpyth.files.file.create("_lib/vendor","jquery.min","js");
 	  cpyth.files.file.save("_lib/vendor","jquery.min.js","This is JQuery!");
 	  cpyth.files.display();
+	  console.log("Ready");
 	},
 	render(node,path){
 	  node = node.content;
-	  var keys = Object.keys(node)
+	  var keys = Object.keys(node);
 	  var ret = "";
 	  if(keys.length > 0){
 	    for(var i=0;i<keys.length;i++){
@@ -218,18 +223,77 @@ var cpyth = {
 		document.getElementById("controls-files").setAttribute('hidden','');
 	  }
 	},
-	save(){
+	importZip(){
 	
 	},
-	load(){
+	exportZip(){
 	
+	},
+	saveOpen(){
+	  if(document.getElementById('content-codemirror-tabs').children.length>0){
+	    var tab = document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]");
+	    var path = tab.getAttribute('data-path');
+	    var file = tab.getAttribute('data-file');
+	    var content = cpyth.vars.codemirror.getValue();
+	    cpyth.files.file.save(path,file,content);
+	  }
+	},
+	closeOpen(){
+	  cpyth.files.saveOpen();
+	  var tabs=document.getElementById('content-codemirror-tabs').children;
+	  var container = document.getElementById('content-codemirror-tabs');
+	  if(tabs.length>1){
+	    var tab = document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]");
+		var i = 0;
+        while( (tab = tab.previousSibling) != null )i++;
+		if((i+1)<=tabs.length){
+		  cpyth.files.file.change(tabs[i+1].getAttribute('data-id'));
+		} else {
+		  cpyth.files.file.change(tabs[i-1].getAttribute('data-id'));
+		}
+		container.removeChild(tabs[i]);
+	  } else {
+	    container.removeChild(tabs[0]);
+		cpyth.vars.openTab = "";
+	  }
 	},
 	file: {
-	  open(path){
-	    
+	  open(path,name){
+	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
+	    var namef = name.replace(/[\.\/]/g,"_");
+		var node = cpyth.vars.files;
+		if(path!=""){
+		  var pathf = path.split(/[\/]/).filter(Boolean);
+		  for(var i=0;i<pathf.length;i++){
+		    if(node.content[pathf[i]]){
+		      node = node.content[pathf[i]];
+		    } else {
+		      throw "path error";
+		    }
+		  };
+		}
+		var id = cpyth.utils.id();
+		cpyth.files.saveOpen();
+		document.getElementById("content-codemirror-tabs").innerHTML += "<div class='tab' data-path='" + path + "' data-file='" + name + "." + node.content[namef].type + "' data-id='t" + id +"'data-open>" + node.content[namef].name + "</div>";
+		cpyth.vars.codemirror.setValue(node.content[namef].content);
+		var tabs = document.getElementById("content-codemirror-tabs").children
+		for(var i=0;i<tabs.length;i++){
+		  tabs[i].addEventListener("click",function(e){cpyth.ui.tabChange(e)},true);
+		  tabs[i].removeAttribute('data-open');
+		}
+		document.querySelector(".tab[data-id=t" + id + "]").setAttribute('data-open','');
+		cpyth.vars.openTab = id;
 	  },
-	  close(tab){
-	
+	  change(tab){
+	    console.log(tab);
+	    cpyth.files.saveOpen();
+		document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").removeAttribute('data-open');
+		cpyth.vars.openTab = tab.replace(/t/,"");
+		var tab = document.querySelector("div[data-id=t" + cpyth.vars.openTab + "]");
+		tab.setAttribute('data-open','');
+		var content = cpyth.files.file.get(tab.getAttribute('data-path'),tab.getAttribute('data-file'));
+		if(content==undefined)content="";
+		cpyth.vars.codemirror.setValue(content);
 	  },
 	  create(path,name,ext){
 		var namef = name.replace(/[\.\/]/g,"_");
@@ -248,7 +312,8 @@ var cpyth = {
 		cpyth.files.display();
 	  },
 	  save(path,name,content){
-	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"")
+	    path = path.replace(/\/$/,"");
+	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
 	    var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
 		if(path!=""){
@@ -365,10 +430,13 @@ var cpyth = {
 	document.getElementById("filenew").addEventListener("click",cpyth.ui.showFile);
 	document.getElementById("foldernew").addEventListener("click",cpyth.ui.showFolder);
 	document.getElementById("createfolder").addEventListener("click",cpyth.ui.createFolder);
+	document.getElementById("tabopen").addEventListener("click",function(){cpyth.files.file.open(cpyth.vars.path,cpyth.vars.file)});
 	document.getElementById("createfile").addEventListener("click",cpyth.ui.createFile);
 	document.getElementById("filedelete").addEventListener("click",function(){cpyth.files.file.remove(cpyth.vars.path,cpyth.vars.file)},true);
+	document.getElementById("tabclose").addEventListener("click",cpyth.files.closeOpen);
 	cpyth.files.init();
 	setInterval(cpyth.utils.documentResize,50);
+	setInterval(cpyth.files.saveOpen,250);
   }
 };
 window.onload = function(){

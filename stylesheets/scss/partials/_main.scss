@@ -21,21 +21,6 @@ body {
   height:calc(100% - 1.5em);
   z-index:-1;
 }
-#overlay {
-  z-index:10000;
-  position:fixed;
-  @include size(100%);
-  background-color:$background;
-  top:0em;
-  opacity:0;
-  visibility:hidden;
-}
-#overlay-title,
-#overlay-text {
-  text-align:center;
-  color:$text;
-}
-
 #content-console {
   border:$border;
   height:calc(100% - 1em);
@@ -184,6 +169,10 @@ body {
 }
 .tab:hover {
   background-color:$menu-background;
+}
+.tab[data-open]{
+  background-color:$tab-active;
+  cursor:default;
 }
 .window,
 .window-aspect {
