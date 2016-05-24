@@ -9,7 +9,8 @@ var cpyth = {
 	id:0,
 	path:"",
 	file:"",
-	openTab:""
+	openTab:"",
+	zip:null
   },
   utils: {
     ajax(method="GET",url="/",cont=function(){}) {
@@ -162,14 +163,8 @@ var cpyth = {
   },
   files: {
     init(){
-	  cpyth.files.folder.create("","_lib");  
-	  cpyth.files.folder.create("","modules");
-	  cpyth.files.folder.create("","test");
-	  cpyth.files.folder.create("_lib","vendor"); 
 	  cpyth.files.file.create("","main","cpyth");
-	  cpyth.files.file.create("test","test","cpyth");
-	  cpyth.files.file.create("_lib/vendor","jquery.min","js");
-	  cpyth.files.file.save("_lib/vendor","jquery.min.js","This is JQuery!");
+	  cpyth.files.file.open("","main.cpyth");
 	  cpyth.files.display();
 	  console.log("Ready");
 	},
@@ -195,11 +190,16 @@ var cpyth = {
 	},
 	display(){
 	  var node = cpyth.vars.files
-	  document.getElementById("treeview").innerHTML = "<ul class='treeview-content'>" + cpyth.files.render(node,"") + "</ul>";
+	  document.getElementById("treeview").innerHTML = "<ul class='treeview-content'><li class='treeview-root' data-path='' data-file=''>Root</li>" + cpyth.files.render(node,"") + "</ul>";
 	  var elem = document.querySelectorAll(".treeview-content > li");
 	  for(var i = 0;i<elem.length;i++){
 	    elem[i].addEventListener("click",function(e){cpyth.files.pathSet(e)},true);
 	  }
+	  cpyth.vars.path = "";
+	  cpyth.vars.file = "";
+	  document.getElementById("path").children[0].innerHTML = "Path: ";
+	  document.getElementById("controls-folders").removeAttribute('hidden');
+	  document.getElementById("controls-files").setAttribute('hidden','');
 	},
 	pathSet(e){
 	  e.stopPropagation();
@@ -223,11 +223,58 @@ var cpyth = {
 		document.getElementById("controls-files").setAttribute('hidden','');
 	  }
 	},
-	importZip(){
-	
+	importZip(e){
+	  var f = e.target.files[0];
+	  JSZip.loadAsync(f).then(function(zip){
+	    console.log("Loading file");
+	    cpyth.vars.files = {type:"folder",name:"root",content:{}};
+	    zip.forEach(function (relativePath, zipEntry) {
+		  if(relativePath.charAt(relativePath.length-1) == '/'){
+			var path = '/' + relativePath;
+			var name = path.substring(path.lastIndexOf('/', path.lastIndexOf('/') - 1), path.length - 1);
+			path = path.replace(/\/$/,"");
+			path = path.replace(/\/(?=[^\/]*$)[\s\S]+/,"");
+			path = path.replace(/^\//,"");
+			name = name.replace(/^\//,"");
+			cpyth.files.folder.create(path,name);
+		  } else {
+			var name = relativePath.match(/(?=[^/]*$)[\s\S]+/)[0]
+			var ext = name.match(/(?=[^.]*$)[\s\S]+/)[0];
+			name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"")
+			var path = ('/'+relativePath).replace(/\/(?=[^/]*$)[\s\S]+/,"");
+			cpyth.files.file.create(path,name,ext);
+			var data = new TextDecoder("utf-8").decode(zipEntry._data.compressedContent)
+			cpyth.files.file.save(path,name+'.'+ext,data);
+		  }
+		});
+		console.log('File loaded');
+	  });
 	},
 	exportZip(){
-	
+	  cpyth.vars.zip = new JSZip();
+	  console.log("Creating zip file")
+	  cpyth.files.createZip(cpyth.vars.zip,"",cpyth.vars.files);
+	  console.log("File zipped")
+	  cpyth.vars.zip.generateAsync({type:"blob"}).then(function(blob){saveAs(blob, "project.cpyth")});
+	},
+	createZip(zip,path,node){
+	  node = node.content;
+	  var keys = Object.keys(node);
+	  if(keys.length > 0){
+	    for(var i=0;i<keys.length;i++){
+	      var test = node[keys[i]];
+	      if(typeof test.content == "object"){
+            var fpath = path +'/'+ test.name;
+			fpath = fpath.replace(/^\//,"")
+			zip.folder(fpath);
+			cpyth.files.createZip(zip,fpath,test);
+		  } else {
+		    var fpath = path +'/'+ test.name
+			fpath = fpath.replace(/^\//,"")
+			zip.file(fpath,test.content);
+		  }
+	    }
+	  }
 	},
 	saveOpen(){
 	  if(document.getElementById('content-codemirror-tabs').children.length>0){
@@ -246,7 +293,7 @@ var cpyth = {
 	    var tab = document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]");
 		var i = 0;
         while( (tab = tab.previousSibling) != null )i++;
-		if((i+1)<=tabs.length){
+		if((i+1)<tabs.length){
 		  cpyth.files.file.change(tabs[i+1].getAttribute('data-id'));
 		} else {
 		  cpyth.files.file.change(tabs[i-1].getAttribute('data-id'));
@@ -285,7 +332,6 @@ var cpyth = {
 		cpyth.vars.openTab = id;
 	  },
 	  change(tab){
-	    console.log(tab);
 	    cpyth.files.saveOpen();
 		document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").removeAttribute('data-open');
 		cpyth.vars.openTab = tab.replace(/t/,"");
@@ -434,6 +480,8 @@ var cpyth = {
 	document.getElementById("createfile").addEventListener("click",cpyth.ui.createFile);
 	document.getElementById("filedelete").addEventListener("click",function(){cpyth.files.file.remove(cpyth.vars.path,cpyth.vars.file)},true);
 	document.getElementById("tabclose").addEventListener("click",cpyth.files.closeOpen);
+	document.getElementById("import").addEventListener("change",function(e){cpyth.files.importZip(e)},true);
+	document.getElementById("export").addEventListener("click",cpyth.files.exportZip);
 	cpyth.files.init();
 	setInterval(cpyth.utils.documentResize,50);
 	setInterval(cpyth.files.saveOpen,250);

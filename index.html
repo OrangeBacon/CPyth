@@ -14,6 +14,14 @@
 	    <p class="nav-titles-title">CPyth</p>
 	  </div>
 	    <div class="dropdown">
+          <span>File</span>
+          <div class="dropdown-content">
+            <a id="export">Export</a>
+            <label for="import">Import</label>
+			<input type="file" id="import" name="file">
+          </div>
+        </div>
+	    <div class="dropdown">
           <span>About</span>
           <div class="dropdown-content">
             <a>Project</a>
@@ -70,7 +78,7 @@
 		  <span class="button" id="filedelete">Delete File</span>
 		  <span class="button" id="tabopen">Open File</span>
 		</div>
-		<div id="controls-folders" hidden>
+		<div id="controls-folders">
 		  <span class="button" id="folderdelete">Delete Folder</span>
 		  <span class="button" id="foldernew">New Folder</span>
 		  <span class="button" id="filenew">New File</span>
