@@ -42,7 +42,7 @@ Commands are sections of code that can be executed, for example a function defin
 
 Loops such as the for and while loop are defined as:
 ```JavaScript
-for[<var>,<start>,<end>,<step>] {:
+for[<var>,<start>,<end>,<step>] {
   <code>
 };
  ```
