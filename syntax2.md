@@ -79,7 +79,8 @@ define float inp1 => void;
 define float inp2 => void;
 inp1 <= input["number 1"];
 inp2 <= input["multiplied by"];
-print[str[inp1] + "*" + str[inp2] + "=" + str[[inp1,*,inp2]]];
+define str string => [str[inp1],+,"*",str[inp2],"=",str[[inp1,*,inp2]]];
+print[str];
 ```
 ```JavaScript
 # Print all integers between 0 and a user input number.
