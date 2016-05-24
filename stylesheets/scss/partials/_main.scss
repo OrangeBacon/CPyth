@@ -1,4 +1,4 @@
-* {
+﻿* {
   box-sizing:border-box;
   color:$text;
 }
@@ -21,21 +21,6 @@ body {
   height:calc(100% - 1.5em);
   z-index:-1;
 }
-#overlay {
-  z-index:10000;
-  position:fixed;
-  @include size(100%);
-  background-color:$background;
-  top:0em;
-  opacity:0;
-  visibility:hidden;
-}
-#overlay-title,
-#overlay-text {
-  text-align:center;
-  color:$text;
-}
-
 #content-console {
   border:$border;
   height:calc(100% - 1em);
@@ -139,60 +124,55 @@ body {
   border-top:$border;
   background-color:$background;
 }
+.button {
+  height:2em;
+  background-color:$content;
+  border-right:$border;
+  border-bottom:$border;
+  font-family:'Roboto', sans-serif;
+  color:$text;
+  cursor:pointer;
+  display:inline-block;
+  padding-left:0.2em;
+  padding-right:0.2em;
+  line-height:2em;
+  font-size:initial;
+}
+.button:hover {
+  background-color:$menu-highlight;
+}
+.button:active {
+  font-weight:bold;
+}
 #content-codemirror-tabs {
   @include size(100%,2em);
   position:absolute;
   top:0;
   border-bottom:$border;
   background-color:$background;
-  overflow-x:scroll;
+  padding-left: 0.2em;
+  white-space:nowrap;
 }
-#content-codemirror-tabs::-webkit-scrollbar-track {
-  background: $background;
+.tab > p {
+  margin: 0;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
 }
 .tab {
-  padding: 0.5em;
-  display: inline;
-  width: auto;
-}
-.tab > div {
-  margin: 0;
-  height: 1.5em;
-  line-height: 1em;
   display: inline-block;
-  background-color: #262626;
-  position: absolute;
-  top: 0.5em;
-  width: 5em;
-  text-align: center;
-  margin-left: -0.55em;
-  z-index: 5;
-  max-width: 5em;
-  border-top: $border;
+  padding: 0 0.5em 0 0.5em;
+  border:$border;
+  margin:0.2em 0.2em 0 0;
+  height:1.8em;
+  cursor:pointer;
 }
-.tab:before,
-.tab:after {
-  content: "";
-  height: 1.8em;
-  width: 1em;
-  display: inline-block;
-  position: relative;
-  transform: rotate(30deg);
-  background-color: $content;
-  z-index: 0;
-  margin-top: 0.65em;
-  border-left: 2px solid black;
+.tab:hover {
+  background-color:$menu-background;
 }
-.tab:after {
-  transform: rotate(-30deg);
-  margin-left: 3.9em;
-  border-left: none;
-  border-right: 2px solid black;
-}
-.tab>div>p {
-  margin: 0;
-  z-index: 5;
-  overflow: hidden;
+.tab[data-open]{
+  background-color:$tab-active;
+  cursor:default;
 }
 .window,
 .window-aspect {
@@ -257,6 +237,149 @@ body {
   bottom:0;
   right:0;
   cursor:nwse-resize;
+}
+#file-browser {
+  width:80%;
+  position:absolute;
+  height:80%;
+  top:10%;
+  left:10%;
+  z-index:100;
+  background-color:$background;
+  border:$border;
+}
+#treeview {
+  width:50%;
+  height:calc(100% - 6em);
+  position:absolute;
+  top:4em;
+  border-right:$border;
+  float:left;
+  overflow-y:scroll;
+  input[type=checkbox] {
+    display:none;
+  }
+  input[type=checkbox] + label:before {
+    content:'\25ba  ';
+	cursor:pointer;
+  }
+  input[type=checkbox]:checked + label:before {
+    content:'\25bc  ';
+	cursor:pointer;
+  }
+  input[type=checkbox]:not(:checked) ~ ul {
+    display:none;
+  }
+  li {
+    list-style-type:none;
+	cursor:pointer;
+  }
+  li:not([data-type]):before {
+    content:'\1f4c2';
+	padding-right:0.5em;
+	cursor:default;
+  }
+  li[data-type]:before {
+    content:'\1f5ce';
+	padding-right:0.5em;
+	cursor:default;
+  }
+  li[data-type=empty] {
+    color:red;
+  }
+  li[data-type=empty]:before {
+    content:'\1F6AB';
+	padding-right:0.5em;
+	cursor:default;
+  }
+  label {
+    cursor:pointer;
+  }
+}
+#treeview::-webkit-scrollbar-track {
+  background: $background;
+}
+#path {
+  width:50%;
+  position:absolute;
+  top:2em;
+  height:2em;
+  border:$border;
+  border-left:0;
+  border-top:0;
+}
+#path p {
+  margin:0;
+  height:2em;
+  line-height:2em;
+  padding-left:1em;
+}
+#controls {
+  width:50%;
+  position:absolute;
+  bottom:0em;
+  height:2em;
+  border:$border;
+  border-left:0;
+  border-bottom:0;
+}
+#controls-folders,
+#controls-files {
+  height:100%;
+  font-size:0;
+}
+#preview {
+  width:50%;
+  height:calc(100% - 2em);
+  position:absolute;
+  right:0;
+}
+#file-browser-header {
+  width:100%;
+  height:2em;
+  border-bottom:$border;
+}
+#file-browser-header > p {
+  margin:0;
+  margin-left:1em;
+  height:2em;
+  display:inline-block;
+  line-height:2em;
+}
+#fileclose {
+  position:absolute;
+  right:0;
+  display:inline-block;
+  border-left:$border;
+}
+#fileclose > p {
+  height:2em;
+  line-height:2em;
+  margin:0;
+  padding:0 0.5em 0 0.5em;
+  cursor:pointer;
+  background-color:$content;
+  border-bottom:$border;
+}
+#fileclose > p:hover {
+  background-color:$menu-highlight;
+}
+#filecreate > div,
+#foldercreate > div {
+  display:inline-block;
+}
+#foldername,
+#filename {
+  display:inline-block;
+  height:100%;
+  padding:0;
+  margin:0;
+  border:0;
+  border-right:$border;
+  outline:0;
+  position:absolute;
+  line-height:2em;
+  padding:0.2em;
 }
 @media only screen and (max-width:600px) {
   #content-console,

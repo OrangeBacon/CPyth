@@ -14,11 +14,19 @@
 	    <p class="nav-titles-title">CPyth</p>
 	  </div>
 	    <div class="dropdown">
+          <span>File</span>
+          <div class="dropdown-content">
+            <a id="export">Export</a>
+            <label for="import">Import</label>
+			<input type="file" id="import" name="file">
+          </div>
+        </div>
+	    <div class="dropdown">
           <span>About</span>
           <div class="dropdown-content">
             <a>Project</a>
             <a href="https://github.com/ScratchOs/CPyth/tree/gh-pages" target="_blank">Code</a>
-            <a href="#">Credits</a>
+            <a href="https://github.com/ScratchOs/CPyth/tree/gh-pages/CREDITS.md">Credits</a>
           </div>
         </div>
 		<div class="dropdown">
@@ -53,8 +61,39 @@
 	  <div id="content-codemirror">
 	    <div id="content-codemirror-tabs"></div>
 	    <div id="content-codemirror-container"></div>
-		<div id="content-codemirror-actions"></div>
+		<div id="content-codemirror-actions">
+		  <span class="button" id="fileopen">File Browser</span><!--
+		  --><span class="button" id="tabclose">Close Current Tab</span>
+		</div>
 	  </div>
+	</div>
+	<div id="file-browser" hidden>
+	  <div id="file-browser-header">
+	    <p>File Browser</p>
+		<div id="fileclose"><p>X</p></div>
+	  </div>
+	  <div id="path"><p>Path:</p></div>
+	  <div id="controls">
+	    <div id="controls-files" hidden>
+		  <span class="button" id="filedelete">Delete File</span>
+		  <span class="button" id="tabopen">Open File</span>
+		</div>
+		<div id="controls-folders">
+		  <span class="button" id="folderdelete">Delete Folder</span>
+		  <span class="button" id="foldernew">New Folder</span>
+		  <span class="button" id="filenew">New File</span>
+		  <span id="filecreate" hidden>
+		    <span class="button" id="createfile">Create</span>
+		    <input id="filename" placeholder="file name">
+		  </span>
+		  <span id="foldercreate" hidden>
+		    <span class="button" id="createfolder">Create</span>
+            <input id="foldername" placeholder="folder name">
+		  </span>
+		</div>
+	  </div>
+	  <div id="treeview"></div>
+	  <div id="preview"></div>
 	</div>
 	</body>
 </html>
