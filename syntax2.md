@@ -63,13 +63,13 @@ Single line comments are placed after `#` and multi-line comments are placed bet
 
 ## Builtin Functions
 
-* Assignment Operator: `=>` This is used for the first assignment of a variable, it sets the variable on the left to an instance of the value on the right. This makes the variable have all of the methods attatched to the value you are setting it to. 
+* Assignment Operator: `=>` This is used for the first assignment of a variable, it sets the variable on the left to an instance of the value on the right. This makes the variable have all of the methods attached to the value you are setting it to. 
 * Value Operator: `<=` Pushes a value on the right into a variable on the left, depending on the input on the right it will format the value.  It is used to get values out of obj, arr and dicts data types.
-* Return Operator: `()` Evaluates the content and returns it.  Maths expressions do not need to have their inputs surounded in brackets.
+* Return Operator: `()` Evaluates the content and returns it.  Maths expressions do not need to have their inputs surrounded in brackets.
 
 ## Unevaluated Inputs
 
-Unevaluated inputs are where the input is not calculated.  This means that you can run the input multiple times with different values. This could be used, for example for maping a function over a list.  To use an unevaluated input, use the function or expression without the brackets surounding it.  To use an unevaluated input, `call <name> with [<inp>:<value>,<inp>:<value>]` or you can call it without the input `call <name>`.  Unevaluated inputs can only be used when calling a function or inside a function that you are writing that has an unevaluated input as one of its inputs.
+Unevaluated inputs are where the input is not calculated.  This means that you can run the input multiple times with different values. This could be used, for example for mapping a function over a list.  To use an unevaluated input, use the function or expression without the brackets surrounding it.  To use an unevaluated input, `call <name> with [<inp>:<value>,<inp>:<value>]` or you can call it without the input `call <name>`.  Unevaluated inputs can only be used when calling a function or inside a function that you are writing that has an unevaluated input as one of its inputs.
 
 ## Example Programs
 
@@ -114,7 +114,7 @@ Example of using objects
 print[
   {
     name => "cpyth",
-    type => "programing language"
+    type => "programming language"
   }
 ];
 ```

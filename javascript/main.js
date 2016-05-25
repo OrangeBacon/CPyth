@@ -159,7 +159,22 @@ var cpyth = {
 	},
 	tabChange(e){
 	  cpyth.files.file.change(e.target.getAttribute("data-id"));
-	}
+	},
+	input(e){
+	  var v = cpyth.vars;
+	  if(e.keyIdentifier == "Enter"){
+	    var h = document.getElementById("history");
+		h.innerHTML = h.innerHTML + "<p class='history-item'><span class='history-close'>X</span><span>" + e.target.value + "</span></p>";
+		exec(e.target.value);
+		e.target.value = "";
+		for(var i=0;i<h.children.length;i++){
+		  h.children[i].children[1].addEventListener("click",function(e){exec(e.target.textContent)},true)
+		}
+		for(var i=0;i<h.children.length;i++){
+		  h.children[i].children[0].addEventListener("click",function(e){document.getElementById("history").children[i-1].remove()},true)
+		}
+	  }
+	},
   },
   files: {
     init(){
@@ -238,10 +253,10 @@ var cpyth = {
 			name = name.replace(/^\//,"");
 			cpyth.files.folder.create(path,name);
 		  } else {
-			var name = relativePath.match(/(?=[^/]*$)[\s\S]+/)[0]
+			var name = relativePath.match(/(?=[^\/]*$)[\s\S]+/)[0]
 			var ext = name.match(/(?=[^.]*$)[\s\S]+/)[0];
 			name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"")
-			var path = ('/'+relativePath).replace(/\/(?=[^/]*$)[\s\S]+/,"");
+			var path = ('/'+relativePath).replace(/\/(?=[^\/]*$)[\s\S]+/,"");
 			cpyth.files.file.create(path,name,ext);
 			var data = new TextDecoder("utf-8").decode(zipEntry._data.compressedContent)
 			cpyth.files.file.save(path,name+'.'+ext,data);
@@ -482,11 +497,16 @@ var cpyth = {
 	document.getElementById("tabclose").addEventListener("click",cpyth.files.closeOpen);
 	document.getElementById("import").addEventListener("change",function(e){cpyth.files.importZip(e)},true);
 	document.getElementById("export").addEventListener("click",cpyth.files.exportZip);
+	document.getElementById("content-console-input-form-text").addEventListener("onsubmit",function(e){return false;},true);
+	document.getElementById("content-console-input-form-text").addEventListener("keydown",function(e){cpyth.ui.input(e)},true);
 	cpyth.files.init();
 	setInterval(cpyth.utils.documentResize,50);
 	setInterval(cpyth.files.saveOpen,250);
   }
 };
+function exec(data){
+  cpyth.console.info("Input: " + data);
+}
 window.onload = function(){
   cpyth.init();
 }

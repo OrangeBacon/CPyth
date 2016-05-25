@@ -66,7 +66,7 @@ body {
 }
 #content-console-output-main {
   background-color: $content;
-  height: calc(100% - 2.2em);
+  height: calc(100% - 6em);
   width: 100%;
   position: absolute;
   top:0;
@@ -76,30 +76,30 @@ body {
 }
 #content-console-output-main > p.info {
   padding-left:1em;
-  color:#A4C7ED;
+  color:$info;
 }
 #content-console-output-main > p.info:before {
   content:"\25BA";
   padding-right:0.5em;
-  color:#A4C7ED;
+  color:$info;
 }
 #content-console-output-main > p.error {
   padding-left:1em;
-  color:#FA5555;
+  color:$error;
 }
 #content-console-output-main > p.error:before {
   content:"\25BA";
   padding-right:0.5em;
-  color:#FA5555;
+  color:$error;
 }
 #content-console-output-main > p.warning {
   padding-left:1em;
-  color:#DCE362;
+  color:$warning;
 }
 #content-console-output-main> p.warning:before {
   content:"\25BA";
   padding-right:0.5em;
-  color:#DCE362;
+  color:$warning;
 }
 #content-console-output-main > p.text {
   padding-left:1em;
@@ -285,7 +285,7 @@ body {
 	cursor:default;
   }
   li[data-type=empty] {
-    color:red;
+    color:$error;
   }
   li[data-type=empty]:before {
     content:'\1F6AB';
@@ -380,6 +380,29 @@ body {
   position:absolute;
   line-height:2em;
   padding:0.2em;
+  color:$text;
+  background-color:$content;
+}
+#history {
+  height:4em;
+  width:100%;
+  position:absolute;
+  bottom:2em;
+  border-top:$border;
+  overflow-y:scroll;
+  padding:0.5em;
+}
+.history-item {
+  word-wrap:break-word;
+  margin:0;
+  cursor:pointer;
+}
+.history-close {
+  color:$error;
+}
+.history-close:after {
+  content:' ';
+  cursor:default;
 }
 @media only screen and (max-width:600px) {
   #content-console,
