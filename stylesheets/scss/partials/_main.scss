@@ -418,6 +418,8 @@ body {
   top: 0;
   background-color:$background;
   z-index:200;
+  position:fixed;
+  padding-top:1em;
 }
 input[type=file] { /*http://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/*/
   width: 0.1px;
@@ -428,8 +430,14 @@ input[type=file] { /*http://tympanus.net/codrops/2015/09/15/styling-customizing-
   z-index: -1;
 }
 input[type=file] + label,
-#content-overlay p {
+#content-overlay p:not(#cookie) {
   cursor:pointer;
+}
+#cookie {
+  position:absolute;
+  bottom:1em;
+  left:1em;
+  width:calc(100% - 2em);
 }
 @media only screen and (max-width:600px) {
   #content-console,

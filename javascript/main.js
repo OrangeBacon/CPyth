@@ -55,7 +55,21 @@ var cpyth = {
 	},
 	id(){
 	  return cpyth.vars.id++
-	}
+	},
+	getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length,c.length);
+        }
+      }
+      return "";
+    }
   },
   window: {
     window(title,content,options={minX:50,minY:50,startX:200,startY:200}) {
@@ -122,8 +136,19 @@ var cpyth = {
 	alternateTheme(e){
 	  if(e.target.checked){
 	    document.getElementById("theme").setAttribute('href','stylesheets/dark-main.css');
+		document.cookie = "theme=1; expires=Fri, 31 Dec 9999 23:59:99 GMT"
 	  } else {
 	    document.getElementById("theme").setAttribute('href','stylesheets/light-main.css');
+		document.cookie = "theme=0; expires=Fri, 31 Dec 9999 23:59:99 GMT"
+	  }
+	},
+	setThemeDefault(){
+	  if(cpyth.utils.getCookie('theme') == "1"){
+	    document.getElementById("theme").setAttribute('href','stylesheets/dark-main.css');
+		document.getElementById("colour").checked = true;
+	  } else {
+	    document.getElementById("theme").setAttribute('href','stylesheets/light-main.css');
+		document.getElementById("colour").checked = false;
 	  }
 	},
 	fileBrowser(e){
@@ -522,6 +547,7 @@ var cpyth = {
     if (window.location.protocol != "https:" && window.location.hostname != "localhost"){
       window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
 	}
+	cpyth.ui.setThemeDefault();
     var host = document.getElementById("content-codemirror-container");
     cpyth.vars.codemirror = CodeMirror(host,{lineNumbers: true,viewportMargin:Infinity});
 	host = document.getElementById("preview");
