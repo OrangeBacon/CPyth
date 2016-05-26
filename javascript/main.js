@@ -182,6 +182,7 @@ var cpyth = {
 	  cpyth.files.file.open("","main.cpyth");
 	  cpyth.files.display();
 	  console.log("Ready");
+	  setInterval(cpyth.files.saveOpen,250);
 	},
 	render(node,path){
 	  node = node.content;
@@ -293,31 +294,50 @@ var cpyth = {
 	},
 	saveOpen(){
 	  if(document.getElementById('content-codemirror-tabs').children.length>0){
-	    var tab = document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]");
-	    var path = tab.getAttribute('data-path');
-	    var file = tab.getAttribute('data-file');
-	    var content = cpyth.vars.codemirror.getValue();
-	    cpyth.files.file.save(path,file,content);
+	    if(document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").getAttribute("data-special") == 'false'){
+	      var tab = document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]");
+	      var path = tab.getAttribute('data-path');
+	      var file = tab.getAttribute('data-file');
+	      var content = cpyth.vars.codemirror.getValue();
+	      cpyth.files.file.save(path,file,content);
+	    }
 	  }
 	},
 	closeOpen(){
-	  cpyth.files.saveOpen();
-	  var tabs=document.getElementById('content-codemirror-tabs').children;
-	  var container = document.getElementById('content-codemirror-tabs');
-	  if(tabs.length>1){
-	    var tab = document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]");
-		var i = 0;
-        while( (tab = tab.previousSibling) != null )i++;
-		if((i+1)<tabs.length){
-		  cpyth.files.file.change(tabs[i+1].getAttribute('data-id'));
-		} else {
-		  cpyth.files.file.change(tabs[i-1].getAttribute('data-id'));
-		}
-		container.removeChild(tabs[i]);
-	  } else {
-	    container.removeChild(tabs[0]);
-		cpyth.vars.openTab = "";
+	  if(document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").getAttribute("data-special") == 'false'){
+	    cpyth.files.saveOpen();
+	    var tabs=document.getElementById('content-codemirror-tabs').children;
+	    var container = document.getElementById('content-codemirror-tabs');
+	    if(tabs.length>1){
+	      var tab = document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]");
+		  var i = 0;
+          while( (tab = tab.previousSibling) != null )i++;
+		  if((i+1)<tabs.length){
+		    cpyth.files.file.change(tabs[i+1].getAttribute('data-id'));
+		  } else {
+		    cpyth.files.file.change(tabs[i-1].getAttribute('data-id'));
+		  }
+		  container.removeChild(tabs[i]);
+	    } else {
+	      container.removeChild(tabs[0]);
+		  cpyth.vars.openTab = "";
+	    }
 	  }
+	},
+	openSpecial(name,id,content){
+	  var uid = cpyth.utils.id()
+	  document.getElementById("content-codemirror-tabs").innerHTML += "<div class='tab' data-special='content-codemirror-container-" + id + "' data-id='t" + uid +"'>" + name + "</div>";
+	  var elem = document.createElement("div")
+	  elem.setAttribute('id',"content-codemirror-container-" + id)
+	  elem.setAttribute('hidden','');
+	  elem.innerHTML = content;
+	  document.getElementById("content-codemirror-container").appendChild(elem);
+	  var tabs = document.getElementById("content-codemirror-tabs").children
+	  for(var i=0;i<tabs.length;i++){
+		tabs[i].addEventListener("click",function(e){cpyth.ui.tabChange(e)},true);
+		tabs[i].removeAttribute('data-open');
+      }
+	  cpyth.files.file.change('t'+uid)
 	},
 	file: {
 	  open(path,name){
@@ -336,7 +356,7 @@ var cpyth = {
 		}
 		var id = cpyth.utils.id();
 		cpyth.files.saveOpen();
-		document.getElementById("content-codemirror-tabs").innerHTML += "<div class='tab' data-path='" + path + "' data-file='" + name + "." + node.content[namef].type + "' data-id='t" + id +"'data-open>" + node.content[namef].name + "</div>";
+		document.getElementById("content-codemirror-tabs").innerHTML += "<div class='tab' data-special='false' data-path='" + path + "' data-file='" + name + "." + node.content[namef].type + "' data-id='t" + id +"'data-open>" + node.content[namef].name + "</div>";
 		cpyth.vars.codemirror.setValue(node.content[namef].content);
 		var tabs = document.getElementById("content-codemirror-tabs").children
 		for(var i=0;i<tabs.length;i++){
@@ -347,14 +367,37 @@ var cpyth = {
 		cpyth.vars.openTab = id;
 	  },
 	  change(tab){
-	    cpyth.files.saveOpen();
-		document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").removeAttribute('data-open');
-		cpyth.vars.openTab = tab.replace(/t/,"");
-		var tab = document.querySelector("div[data-id=t" + cpyth.vars.openTab + "]");
-		tab.setAttribute('data-open','');
-		var content = cpyth.files.file.get(tab.getAttribute('data-path'),tab.getAttribute('data-file'));
-		if(content==undefined)content="";
-		cpyth.vars.codemirror.setValue(content);
+	    if(document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").getAttribute("data-special") == 'false'){
+	      cpyth.files.saveOpen();
+		  document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").removeAttribute('data-open');
+		  cpyth.vars.openTab = tab.replace(/t/,"");
+		  var tab = document.querySelector("div[data-id=t" + cpyth.vars.openTab + "]");
+		  tab.setAttribute('data-open','');
+		  if(document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").getAttribute("data-special") == 'false'){
+		    var content = cpyth.files.file.get(tab.getAttribute('data-path'),tab.getAttribute('data-file'));
+		    if(content==undefined)content="";
+		    cpyth.vars.codemirror.setValue(content);
+		  } else {
+		    cpyth.vars.codemirror.getWrapperElement().setAttribute('hidden','');
+			document.getElementById(tab.getAttribute('data-special')).removeAttribute('hidden')
+		  }
+		} else {
+		  var ctab = document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]");
+		  ctab.removeAttribute('data-open');
+		  cpyth.vars.openTab = tab.replace(/t/,"");
+		  var ntab = document.querySelector("div[data-id=t" + cpyth.vars.openTab + "]");
+		  ntab.setAttribute('data-open','');
+		  document.getElementById(ctab.getAttribute('data-special')).setAttribute('hidden','')
+		  if(ntab.getAttribute("data-special") == 'false'){
+		    cpyth.vars.codemirror.getWrapperElement().removeAttribute('hidden');
+			cpyth.vars.codemirror.refresh();
+			var content = cpyth.files.file.get(ntab.getAttribute('data-path'),ntab.getAttribute('data-file'));
+		    if(content==undefined)content="";
+			cpyth.vars.codemirror.setValue(content);
+		  } else {
+			document.getElementById(ntab.getAttribute('data-special')).removeAttribute('hidden')
+		  }
+		}
 	  },
 	  create(path,name,ext){
 		var namef = name.replace(/[\.\/]/g,"_");
@@ -501,7 +544,6 @@ var cpyth = {
 	document.getElementById("content-console-input-form-text").addEventListener("keydown",function(e){cpyth.ui.input(e)},true);
 	cpyth.files.init();
 	setInterval(cpyth.utils.documentResize,50);
-	setInterval(cpyth.files.saveOpen,250);
   }
 };
 function exec(data){
