@@ -175,14 +175,25 @@ var cpyth = {
 		}
 	  }
 	},
+	blankProj(){
+	  document.getElementById("content-overlay").setAttribute('hidden','');
+	  cpyth.vars.files = {type:"folder",name:"root",content:{}}
+	},
+	deleteFolder(){
+	  document.getElementById("folder-delete").removeAttribute('hidden');
+	  setTimeout(function(){document.getElementById("folder-delete").setAttribute('hidden','')},3000)
+	},
+	deleteFile(){
+	  document.getElementById("file-delete").removeAttribute('hidden');
+	  setTimeout(function(){document.getElementById("file-delete").setAttribute('hidden','')},3000)
+	},
   },
   files: {
     init(){
 	  cpyth.files.file.create("","main","cpyth");
-	  cpyth.files.file.open("","main.cpyth");
 	  cpyth.files.display();
-	  console.log("Ready");
 	  setInterval(cpyth.files.saveOpen,250);
+	  console.log("Ready");
 	},
 	render(node,path){
 	  node = node.content;
@@ -240,6 +251,8 @@ var cpyth = {
 	  }
 	},
 	importZip(e){
+	  if(e.target.id=="import-new"||confirm("Do you wish to load this project? It will overwrite all work in the IDE.  Any work not saved locally will be lost.")){
+	  document.getElementById("content-overlay").setAttribute('hidden','');
 	  var f = e.target.files[0];
 	  JSZip.loadAsync(f).then(function(zip){
 	    console.log("Loading file");
@@ -265,6 +278,7 @@ var cpyth = {
 		});
 		console.log('File loaded');
 	  });
+	  }
 	},
 	exportZip(){
 	  cpyth.vars.zip = new JSZip();
@@ -433,6 +447,7 @@ var cpyth = {
 		node.content[namef].content = content;
 	  },
 	  remove(path,name){
+	    document.getElementById("file-delete").setAttribute('hidden','')
 		name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
 	    var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
@@ -484,6 +499,7 @@ var cpyth = {
 		cpyth.files.display();
 	  },
 	  remove(path){
+	    document.getElementById("folder-delete").setAttribute('hidden','')
 		var node = cpyth.vars.files;
 		path = path.split(/[\/]/).filter(Boolean);
 		if(path!="" && (path.length-1)>0){
@@ -503,6 +519,9 @@ var cpyth = {
 	}
   },
   init() {
+    if (window.location.protocol != "https:" && window.location.hostname != "localhost"){
+      window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+	}
     var host = document.getElementById("content-codemirror-container");
     cpyth.vars.codemirror = CodeMirror(host,{lineNumbers: true,viewportMargin:Infinity});
 	host = document.getElementById("preview");
@@ -530,18 +549,21 @@ var cpyth = {
 	document.getElementById("colour").addEventListener("change",function(e){cpyth.ui.alternateTheme(e)},true);
 	document.getElementById("fileopen").addEventListener("click",function(e){cpyth.ui.fileBrowser(e)},true);
 	document.getElementById("fileclose").addEventListener("click",function(e){cpyth.ui.fileBrowser(e)},true);
-	document.getElementById("folderdelete").addEventListener("click",function(){cpyth.files.folder.remove(cpyth.vars.path)},true);
+	document.getElementById("folderdelete").addEventListener("click",cpyth.ui.deleteFolder);
 	document.getElementById("filenew").addEventListener("click",cpyth.ui.showFile);
 	document.getElementById("foldernew").addEventListener("click",cpyth.ui.showFolder);
 	document.getElementById("createfolder").addEventListener("click",cpyth.ui.createFolder);
 	document.getElementById("tabopen").addEventListener("click",function(){cpyth.files.file.open(cpyth.vars.path,cpyth.vars.file)});
 	document.getElementById("createfile").addEventListener("click",cpyth.ui.createFile);
-	document.getElementById("filedelete").addEventListener("click",function(){cpyth.files.file.remove(cpyth.vars.path,cpyth.vars.file)},true);
+	document.getElementById("filedelete").addEventListener("click",cpyth.ui.deleteFile);
 	document.getElementById("tabclose").addEventListener("click",cpyth.files.closeOpen);
 	document.getElementById("import").addEventListener("change",function(e){cpyth.files.importZip(e)},true);
+	document.getElementById("import-new").addEventListener("change",function(e){cpyth.files.importZip(e)},true);
 	document.getElementById("export").addEventListener("click",cpyth.files.exportZip);
-	document.getElementById("content-console-input-form-text").addEventListener("onsubmit",function(e){return false;},true);
-	document.getElementById("content-console-input-form-text").addEventListener("keydown",function(e){cpyth.ui.input(e)},true);
+	document.getElementById("blank").addEventListener("click",cpyth.ui.blankProj);
+	document.getElementById("file-delete").addEventListener("click",function(){cpyth.files.file.remove(cpyth.vars.path,cpyth.vars.file)},true)
+	document.getElementById("folder-delete").addEventListener("click",function(){cpyth.files.folder.remove(cpyth.vars.path)},true);
+	document.getElementById("content-console-input-text").addEventListener("keydown",function(e){cpyth.ui.input(e)},true);
 	cpyth.files.init();
 	setInterval(cpyth.utils.documentResize,50);
   }

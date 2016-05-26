@@ -36,15 +36,6 @@
 .dropdown > span {
   color: #ffffff; }
 
-input[type=file] {
-  /*http://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/*/
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1; }
-
 /* BASICS */
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
@@ -559,7 +550,7 @@ body {
   -moz-border-radius: 0 0 5px 5px;
   border-radius: 0 0 5px 5px; }
 
-#content-console-input-form-text {
+#content-console-input-text {
   padding: 0;
   outline: 0;
   width: 100%;
@@ -892,6 +883,13 @@ body {
   color: white;
   background-color: #262626; }
 
+#folder-delete,
+#file-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-left: 2px solid black; }
+
 #history {
   height: 4em;
   width: 100%;
@@ -912,6 +910,27 @@ body {
 .history-close:after {
   content: ' ';
   cursor: default; }
+
+#content-overlay {
+  height: calc(100% + 1em);
+  position: absolute;
+  width: 100%;
+  top: 0;
+  background-color: #464444;
+  z-index: 200; }
+
+input[type=file] {
+  /*http://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/*/
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1; }
+
+input[type=file] + label,
+#content-overlay p {
+  cursor: pointer; }
 
 @media only screen and (max-width: 600px) {
   #content-console,

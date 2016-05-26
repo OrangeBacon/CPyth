@@ -47,16 +47,19 @@
         </div>
     </div>
     <div id="content">
+	  <div id="content-overlay">
+	    <h1>CPyth</h1>
+		<p id="blank">Blank Project</p>
+		<input type="file" id="import-new" name="file">
+		<label for="import-new">Import</label>
+	  </div>
 	  <div id="content-console">
 	    <div id="content-console-output">
 		  <div id="content-console-output-main"></div>
 		</div>
 		<div id="content-console-input">
 		  <div id="history"></div>
-		  <form id="content-console-input-form">
-		    <input id="content-console-input-form-text" type="text" placeholder="Type Here" autocomplete="off">
-		    <input type="submit" id="content-console-input-form-submit">
-	      </form>
+		  <input id="content-console-input-text" type="text" placeholder="Type Here" autocomplete="off">
 		</div>
 	  </div>
 	  <div id="content-codemirror">
@@ -91,6 +94,12 @@
 		    <span class="button" id="createfolder">Create</span>
             <input id="foldername" placeholder="folder name">
 		  </span>
+		</div>
+		<div id="file-delete" hidden>
+		  <span class="button">Confirm File Deletion</span>
+		</div>
+		<div id="folder-delete"hidden>
+		  <span class="button">Confirm Folder Deletion</span>
 		</div>
 	  </div>
 	  <div id="treeview"></div>
