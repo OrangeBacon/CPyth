@@ -252,6 +252,7 @@ var cpyth = {
 	  document.getElementById("path").children[0].innerHTML = "Path: ";
 	  document.getElementById("controls-folders").removeAttribute('hidden');
 	  document.getElementById("controls-files").setAttribute('hidden','');
+	  cpyth.vars.codemirrorPreview.setValue('')
 	},
 	pathSet(e){
 	  e.stopPropagation();
@@ -270,9 +271,35 @@ var cpyth = {
 		document.getElementById("controls-files").removeAttribute('hidden');
 		document.getElementById("controls-folders").setAttribute('hidden','');
 	  } else {
-	    cpyth.vars.codemirrorPreview.setValue("");
 		document.getElementById("controls-folders").removeAttribute('hidden');
 		document.getElementById("controls-files").setAttribute('hidden','');
+		file = file.replace(/\.(?=[^.]*$)[\s\S]+/,"");
+		var node = cpyth.vars.files;
+		if(path!=""){
+		  var pathf = path.split(/[\/]/).filter(Boolean);
+		  for(var i=0;i<pathf.length;i++){
+		    if(node.content[pathf[i]]){
+		      node = node.content[pathf[i]];
+		    } else {
+		      throw "path error";
+		    }
+		  };
+		}
+		node = node.content
+		var keys = Object.keys(node)
+		var text = "This folder contains <file> files and <folder> folders"
+		var files = 0
+		var folders = 0
+		for(var i=0;i<keys.length;i++){
+		  if(node[keys[i]].type == 'folder'){
+		    folders++
+		  } else {
+		    files++
+		  }
+		}
+		text = text.replace('<file>',files)
+		text = text.replace('<folder>',folders)
+		cpyth.vars.codemirrorPreview.setValue(text)
 	  }
 	},
 	importZip(e){
