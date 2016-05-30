@@ -15,7 +15,7 @@ var cpyth = {
   utils: {
     ajax(method="GET",url="/",cont=function(){}) {
       var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function(){if (xhttp.readyState == 4 && xhttp.status == 200) {cont(xhttp.responseText)}else{console.log("Ajax Error")}};
+      xhttp.onreadystatechange = function(){if (xhttp.readyState == 4 && xhttp.status == 200) {cont(xhttp.responseText)}};
       xhttp.open(method, url, true);
       xhttp.send();
     },
@@ -217,7 +217,7 @@ var cpyth = {
     init(){
 	  cpyth.files.file.create("","main","cpyth");
 	  cpyth.files.display();
-	  setInterval(cpyth.files.saveOpen,250);
+	  setInterval(cpyth.files.saveOpen,60000);
 	  console.log("Ready");
 	},
 	render(node,path){
@@ -326,7 +326,7 @@ var cpyth = {
 		  } else {
 		    var fpath = path +'/'+ test.name
 			fpath = fpath.replace(/^\//,"")
-			zip.file(fpath,test.content);
+			if(test.readOnly==false)zip.file(fpath,test.content);
 		  }
 	    }
 	  }
@@ -337,17 +337,18 @@ var cpyth = {
 	      var tab = document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]");
 	      var path = tab.getAttribute('data-path');
 	      var file = tab.getAttribute('data-file');
+		  var write = tab.getAttribute('data-write')
 	      var content = cpyth.vars.codemirror.getValue();
-	      cpyth.files.file.save(path,file,content);
+		  if(write=='true'){cpyth.files.file.save(path,file,content);}
 	    }
 	  }
 	},
 	closeOpen(){
-	  if(document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").getAttribute("data-special") == 'false'){
-	    cpyth.files.saveOpen();
-	    var tabs=document.getElementById('content-codemirror-tabs').children;
-	    var container = document.getElementById('content-codemirror-tabs');
-	    if(tabs.length>1){
+	  cpyth.files.saveOpen();
+	  var tabs=document.getElementById('content-codemirror-tabs').children;
+	  var container = document.getElementById('content-codemirror-tabs');
+	  if(tabs.length>1){
+	    if(document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").getAttribute("data-special") == 'false'){
 	      var tab = document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]");
 		  var i = 0;
           while( (tab = tab.previousSibling) != null )i++;
@@ -403,6 +404,13 @@ var cpyth = {
 		  tabs[i].removeAttribute('data-open');
 		}
 		document.querySelector(".tab[data-id=t" + id + "]").setAttribute('data-open','');
+		if(node.content[namef].readOnly){
+		  document.querySelector(".tab[data-id=t" + id + "]").setAttribute('data-write','false')
+		  cpyth.vars.codemirror.setOption("readOnly", true)
+		} else {
+		  document.querySelector(".tab[data-id=t" + id + "]").setAttribute('data-write','true')
+		  cpyth.vars.codemirror.setOption("readOnly", false)
+		}
 		cpyth.vars.openTab = id;
 	  },
 	  change(tab){
@@ -413,8 +421,13 @@ var cpyth = {
 		  var tab = document.querySelector("div[data-id=t" + cpyth.vars.openTab + "]");
 		  tab.setAttribute('data-open','');
 		  if(document.querySelector(".tab[data-id=t" + cpyth.vars.openTab + "]").getAttribute("data-special") == 'false'){
+		    if(tab.getAttribute('data-write') == 'true'){
+			  cpyth.vars.codemirror.setOption("readOnly", false)
+			} else {
+			  cpyth.vars.codemirror.setOption("readOnly", true)
+			}
 		    var content = cpyth.files.file.get(tab.getAttribute('data-path'),tab.getAttribute('data-file'));
-		    if(content==undefined)content="";
+		    if(content==undefined){content=""};
 		    cpyth.vars.codemirror.setValue(content);
 		  } else {
 		    cpyth.vars.codemirror.getWrapperElement().setAttribute('hidden','');
@@ -438,7 +451,7 @@ var cpyth = {
 		  }
 		}
 	  },
-	  create(path,name,ext){
+	  create(path,name,ext,readOnly){
 		var namef = name.replace(/[\.\/]/g,"_");
 		var node = cpyth.vars.files;
 		if(path!=""){
@@ -452,9 +465,35 @@ var cpyth = {
 		  };
 		}
 		node.content[namef] = {type:ext,name:name+"."+ext,content:""};
+		if(readOnly){
+		  node.content[namef].readOnly = true
+		} else {
+		  node.content[namef].readOnly = false
+		}
 		cpyth.files.display();
 	  },
 	  save(path,name,content){
+	    path = path.replace(/\/$/,"");
+	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
+	    var namef = name.replace(/[\.\/]/g,"_");
+		var node = cpyth.vars.files;
+		if(path!=""){
+		  path = path.split(/[\/]/).filter(Boolean);
+		  for(var i=0;i<path.length;i++){
+		    if(node.content[path[i]]){
+		      node = node.content[path[i]];
+		    } else {
+		      throw "path error";
+		    }
+		  };
+		}
+		if(node.content[namef].readOnly){
+		  throw "read only file"
+		} else {
+		  node.content[namef].content = content;
+		}
+	  },
+	  set(path,name,content){
 	    path = path.replace(/\/$/,"");
 	    name = name.replace(/\.(?=[^.]*$)[\s\S]+/,"");
 	    var namef = name.replace(/[\.\/]/g,"_");
