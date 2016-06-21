@@ -494,6 +494,9 @@ span.CodeMirror-selectedtext {
   box-sizing: border-box;
   color: black; }
 
+[hidden] {
+  display: none; }
+
 html,
 body {
   margin: 0;
@@ -507,7 +510,8 @@ body {
   overflow: hidden; }
 
 #content {
-  width: 100%;
+  width: 98%;
+  margin-left: 1%;
   position: absolute;
   top: 1.5em;
   padding: 1em 0 0 0;
@@ -519,25 +523,25 @@ body {
 #content-console {
   border: 1px solid #999999;
   height: calc(100% - 1em);
-  width: 49%;
   display: inline-block;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
   text-align: start;
   background-color: #ffffff;
-  position: relative; }
+  position: relative;
+  float: left; }
 
 #content-codemirror {
   border: 1px solid #999999;
   height: calc(100% - 1em);
-  width: 49%;
   display: inline-block;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
   background-color: #ffffff;
-  text-align: start; }
+  text-align: start;
+  float: right; }
 
 #content-console-input {
   border-top: 1px solid #999999;
@@ -940,19 +944,28 @@ input[type=file] + label,
   left: 1em;
   width: calc(100% - 2em); }
 
+.gutter {
+  height: calc(100% - 2em);
+  left: calc(50% - 5px);
+  position: absolute;
+  border-top: 1px solid #999999;
+  border-bottom: 1px solid #999999;
+  cursor: ew-resize; }
+  .gutter:before {
+    content: '.\A.\A.';
+    line-height: 2em; }
+
 @media only screen and (max-width: 600px) {
   #content-console,
   #content-codemirror {
-    width: 95%;
-    height: 95%; }
+    height: 95% !important;
+    width: 95% !important;
+    float: none; }
 
   #content {
     overflow-y: scroll; }
 
-  #foot {
-    display: none; }
-
-  #nav-menu-settings-hide {
+  .gutter {
     display: none; } }
 
 /*# sourceMappingURL=light-main.css.map */

@@ -2,6 +2,9 @@
   box-sizing:border-box;
   color:$text;
 }
+[hidden] {
+  display:none;
+}
 html,
 body {
   margin:0;
@@ -12,7 +15,8 @@ body {
   overflow:hidden;
 }
 #content {
-  width:100%;
+  width:98%;
+  margin-left:1%;
   position:absolute;
   top:1.5em;
   padding:1em 0 0 0;
@@ -24,21 +28,23 @@ body {
 #content-console {
   border:$border;
   height:calc(100% - 1em);
-  width:49%;
+  //width:49%;
   display:inline-block;
   @include prefix((border-radius: $border-radius), webkit moz);
   text-align:start;
   background-color:$content;
   position:relative;
+  float:left;
 }
 #content-codemirror {
   border:$border;
   height:calc(100% - 1em);
-  width:49%;
+  //width:49%;
   display:inline-block;
   @include prefix((border-radius: $border-radius), webkit moz);
   background-color:$content;
   text-align:start;
+  float:right;
 }
 #content-console-input {
   border-top: $border;
@@ -439,18 +445,29 @@ input[type=file] + label,
   left:1em;
   width:calc(100% - 2em);
 }
+.gutter {
+  height: calc(100% - 2em);
+  left: calc(50% - 5px);
+  position: absolute;
+  border-top:$border;
+  border-bottom:$border;
+  cursor:ew-resize;
+  &:before {
+    content:'.\A.\A.';
+	line-height:2em;
+  }
+}
 @media only screen and (max-width:600px) {
   #content-console,
   #content-codemirror  {
-    @include size(95%);
+    height:95%!important;
+	width:95%!important;
+	float:none;
   }
   #content {
     overflow-y:scroll;
   }
-  #foot {
-    display:none;
-  }
-  #nav-menu-settings-hide {
+  .gutter {
     display:none;
   }
 }
